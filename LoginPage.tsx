@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { Button, Form, Input, Card, Typography, Alert, Space } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import './LoginPage.css';
 
 const { Title, Text } = Typography;
 
@@ -18,21 +19,15 @@ const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Get the redirect path from location state or default to dashboard
+  // Get redirect path from location state or default to dashboard
   const from = (location.state as any)?.from?.pathname || '/admin/dashboard';
 
   const handleSubmit = async (values: LoginFormValues) => {
     setLoading(true);
     setError(null);
-
     try {
       const { error } = await signIn(values.email, values.password);
-
-      if (error) {
-        throw error;
-      }
-
-      // Redirect to the page they were trying to access
+      if (error) throw error;
       navigate(from, { replace: true });
     } catch (err: any) {
       setError(err.message || 'Failed to sign in. Please check your credentials.');
@@ -42,16 +37,20 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <Card className="w-full max-w-md shadow-lg">
+    <div className="login-bg-root">
+      <Card>
         <div className="text-center mb-6">
-          <img 
-            src="/logo.png" 
-            alt="School Logo" 
-            className="mx-auto h-16 mb-4" 
+          <img
+            src="/logo.png"
+            alt="School Logo"
+            className="login-logo"
           />
-          <Title level={3}>Salary Management System</Title>
-          <Text type="secondary">Admin Login</Text>
+          <Title level={3} className="login-header-title">
+            Salary Management System
+          </Title>
+          <Text type="secondary" className="login-header-desc">
+            Admin Login
+          </Text>
         </div>
 
         {error && (
@@ -77,10 +76,10 @@ const LoginPage: React.FC = () => {
               { type: 'email', message: 'Please enter a valid email' }
             ]}
           >
-            <Input 
-              prefix={<UserOutlined />} 
-              placeholder="Email" 
-              size="large" 
+            <Input
+              prefix={<UserOutlined />}
+              placeholder="Email"
+              size="large"
             />
           </Form.Item>
 
@@ -88,28 +87,28 @@ const LoginPage: React.FC = () => {
             name="password"
             rules={[{ required: true, message: 'Please enter your password' }]}
           >
-            <Input.Password 
-              prefix={<LockOutlined />} 
-              placeholder="Password" 
-              size="large" 
+            <Input.Password
+              prefix={<LockOutlined />}
+              placeholder="Password"
+              size="large"
             />
           </Form.Item>
 
           <Form.Item>
-            <Space direction="vertical" className="w-full">
-              <Button 
-                type="primary" 
-                htmlType="submit" 
-                loading={loading} 
-                className="w-full"
+            <Space direction="vertical" className="w-full" style={{ width: '100%' }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={loading}
                 size="large"
+                className="login-btn w-full"
               >
                 Log in
               </Button>
-              <Button 
-                type="link" 
+              <Button
+                type="link"
                 onClick={() => navigate('/forgot-password')}
-                className="w-full"
+                className="forgot-btn w-full"
               >
                 Forgot password?
               </Button>
@@ -117,7 +116,7 @@ const LoginPage: React.FC = () => {
           </Form.Item>
         </Form>
 
-        <div className="text-center mt-4">
+        <div className="text-center login-footer">
           <Text type="secondary">
             &copy; {new Date().getFullYear()} Salary Management System
           </Text>

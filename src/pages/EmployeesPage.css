@@ -1,0 +1,233 @@
+/* Container and Layout Styles */
+.employees-page-container {
+  background: #f4f7fa;
+  min-height: 100vh;
+  padding: 24px 40px;
+}
+
+@media (max-width: 600px) {
+  .employees-page-container {
+    padding: 10px 0;
+  }
+}
+.employee-search-input,
+.employee-search-input input {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+/* Header Area */
+.employees-page-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .employees-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+}
+
+/* Typography */
+.ant-typography {
+  margin-bottom: 0 !important;
+  color: #122145;
+  font-weight: 700;
+}
+
+/* Search Box Enhancements */
+.employee-search-input {
+  background: #fff !important;
+  
+  padding-left: 12px !important;
+  border-radius: 30px !important;
+  font-size: 1rem !important;
+  height: 50px !important;
+  box-shadow: 0 3px 12px 0 rgba(80, 110, 245, 0.04);
+}
+.employee-search-input input {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  font-size: 1rem !important;
+  color: #222 !important;
+  padding-left: 0 !important;
+  height: 38px !important; /* match parent minus borders */
+}
+.employee-search-input input:-webkit-autofill {
+  background: #fff !important;
+  box-shadow: 0 0 0 1000px #fff inset !important;
+  -webkit-text-fill-color: #111 !important;
+}
+
+
+
+/* Add Employee Button */
+.employee-add-btn {
+  border-radius: 20px !important;
+  font-size: 1rem !important;
+  padding: 0 20px !important;
+  background: linear-gradient(90deg, #db53f7 50%, #e4f1ff 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba(80,110,245,0.06);
+}
+
+.employee-add-btn:hover, .employee-add-btn:focus {
+  background: linear-gradient(90deg, #e7e9ee 40%, #77ceff 100%);
+  color: #fff !important;
+  border: none;
+}
+
+/* Ant Table Enhancements */
+.ant-table-wrapper {
+  background: transparent;
+}
+
+/* Table head */
+.ant-table-thead > tr > th {
+  background: #eef3fb !important;
+  font-weight: 600;
+  color: #234 !important;
+  font-size: 0.98rem;
+  border-bottom: 2px solid #e7eaf2;
+}
+
+/* Card shadow for table */
+.ant-table {
+  background: #fff !important;
+  border-radius: 14px !important;
+  box-shadow: 0 3px 16px rgba(86, 99, 168, 0.10);
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .ant-table {
+    border-radius: 7px !important;
+    font-size: 14px;
+  }
+  .ant-table-thead > tr > th, 
+  .ant-table-tbody > tr > td {
+    padding: 8px !important;
+  }
+}
+
+/* Table actions buttons */
+.ant-btn-text {
+  color: #5a4f59 !important;
+  border-radius: 10px !important;
+  font-weight: 500;
+  margin: 0 2px;
+}
+
+.ant-btn-text:hover {
+  background: #f0f5ff !important;
+  color: #6fb1fc !important;
+}
+
+.ant-btn-text[danger] {
+  color: #e15d4c !important;
+}
+
+.ant-btn-text[danger]:hover {
+  color: #fff !important;
+  background: #e15d4c !important;
+}
+
+/* Modal enhancements */
+.ant-modal-content {
+  border-radius: 14px !important;
+  box-shadow: 0 6px 32px rgba(59, 55, 188, 0.13);
+  background: #fcfdff;
+}
+@media (max-width: 600px) {
+  .employee-search-input,
+  .employee-search-input input,
+  .employee-search-input .ant-input {
+    background: #fff !important;
+   
+  }
+}
+@media (max-width: 600px) {
+  .ant-modal {
+    max-width: 98vw !important;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+/* Custom Form styles */
+.ant-form-item-label label {
+  font-weight: 500;
+  color: #3a4371 !important;
+}
+
+.ant-form-item {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .ant-form-item {
+    margin-bottom: 12px;
+  }
+
+  .ant-modal-content {
+    padding: 12px 4px !important;
+  }
+}
+
+/* Ant Select + Datepicker */
+.ant-select, .ant-picker {
+  width: 100% !important;
+  border-radius: 8px;
+  min-height: 40px;
+}
+
+/* Responsive tweaks to fit mobile */
+@media (max-width: 500px) {
+  .ant-select, .ant-input, .ant-picker {
+    min-height: 36px;
+    font-size: 14px;
+  }
+}
+
+/* Tag override for status */
+.ant-tag-green {
+  background: #e8ffec!important;
+  color: #136532!important;
+  border: none;
+}
+.ant-tag-volcano {
+  background: #fff2e8!important;
+  color: #b44a20!important;
+  border: none;
+}
+.ant-tag-geekblue {
+  background: #eaf1fe!important;
+  color: #3661d5!important;
+  border: none;
+}
+.ant-tag-red {
+  background: #fae8e9!important;
+  color: #ae1b22!important;
+  border: none;
+}
+
+/* Popconfirm tweaks */
+.ant-popover-inner-content, .ant-pop-over-inner {
+  font-size: 1rem;
+}
+@media (max-width: 600px) {
+  .ant-table-tbody > tr > td,
+  .ant-table-thead > tr > th {
+    color: #000 !important;
+  }
+}

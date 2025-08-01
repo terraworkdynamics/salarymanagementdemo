@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import type { ColumnsType } from 'antd/es/table';
 import { Key } from 'react';
-import { 
-  Table, 
-  Button, 
-  Space, 
-  Typography, 
-  Input, 
-  Modal, 
-  Form, 
-  Select, 
-  DatePicker, 
+import {
+  Table,
+  Button,
+  Space,
+  Typography,
+  Input,
+  Modal,
+  Form,
+  Select,
+  DatePicker,
   message,
   Popconfirm,
   Tag
 } from 'antd';
-import { 
-  PlusOutlined, 
-  EditOutlined, 
-  DeleteOutlined, 
+import {
+  PlusOutlined,
+  EditOutlined,
+  DeleteOutlined,
   SearchOutlined,
   UserOutlined
 } from '@ant-design/icons';
+
 import { fetchEmployees, createEmployee, updateEmployee, deleteEmployee } from '../lib/supabase-client';
 import { Database } from '../types/database.types';
+
+import './EmployeesPage.css';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -81,19 +84,21 @@ const EmployeesPage: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
-      
+      // Handle conversion for date if using Dayjs or Moment
+      if (values.date_of_joining && typeof values.date_of_joining !== 'string') {
+        values.date_of_joining = values.date_of_joining.format('YYYY-MM-DD');
+      }
       if (editingEmployee) {
-        // Update existing employee
+        // Update
         const { error } = await updateEmployee(editingEmployee.id, values);
         if (error) throw error;
         message.success('Employee updated successfully');
       } else {
-        // Create new employee
+        // Create
         const { error } = await createEmployee(values);
         if (error) throw error;
         message.success('Employee added successfully');
       }
-      
       setModalVisible(false);
       loadEmployees();
     } catch (error) {
@@ -114,7 +119,7 @@ const EmployeesPage: React.FC = () => {
     }
   };
 
-  const filteredEmployees = employees.filter(employee => 
+  const filteredEmployees = employees.filter(employee =>
     employee.first_name.toLowerCase().includes(searchText.toLowerCase()) ||
     employee.last_name.toLowerCase().includes(searchText.toLowerCase()) ||
     employee.employee_id.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -122,97 +127,96 @@ const EmployeesPage: React.FC = () => {
     employee.designation.toLowerCase().includes(searchText.toLowerCase())
   );
 
- const columns: ColumnsType<Employee> = [
-  {
-    title: 'Employee ID',
-    dataIndex: 'employee_id',
-    key: 'employee_id',
-    sorter: (a, b) => a.employee_id.localeCompare(b.employee_id),
-  },
-  {
-    title: 'Name',
-    key: 'name',
-    render: (_, record) => `${record.first_name} ${record.last_name}`,
-    sorter: (a, b) =>
-      `${a.first_name} ${a.last_name}`.localeCompare(`${b.first_name} ${b.last_name}`),
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
-  },
-  {
-    title: 'Department',
-    dataIndex: 'department',
-    key: 'department',
-    filters: Array.from(new Set(employees.map(e => e.department))).map(dept => ({
-      text: dept,
-      value: dept,
-    })),
-    onFilter: (value: boolean | Key, record) => record.department === value.toString(),
-  },
-  {
-    title: 'Designation',
-    dataIndex: 'designation',
-    key: 'designation',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-    render: (status: string) => {
-      let color = 'green';
-      if (status === 'inactive') color = 'volcano';
-      else if (status === 'on_leave') color = 'geekblue';
-      else if (status === 'terminated') color = 'red';
-
-      return <Tag color={color}>{status.toUpperCase().replace('_', ' ')}</Tag>;
+  const columns: ColumnsType<Employee> = [
+    {
+      title: 'Employee ID',
+      dataIndex: 'employee_id',
+      key: 'employee_id',
+      sorter: (a, b) => a.employee_id.localeCompare(b.employee_id),
     },
-    filters: [
-      { text: 'Active', value: 'active' },
-      { text: 'Inactive', value: 'inactive' },
-      { text: 'On Leave', value: 'on_leave' },
-      { text: 'Terminated', value: 'terminated' },
-    ],
-    onFilter: (value: boolean | Key, record) => record.department === value.toString(),
-  },
-  {
-    title: 'Actions',
-    key: 'actions',
-    render: (_, record) => (
-      <Space size="middle">
-        <Button type="text" icon={<EditOutlined />} onClick={() => showEditModal(record)} />
-        <Popconfirm
-          title="Are you sure you want to delete this employee?"
-          onConfirm={() => handleDelete(record.id)}
-          okText="Yes"
-          cancelText="No"
-        >
-          <Button type="text" danger icon={<DeleteOutlined />} />
-        </Popconfirm>
-      </Space>
-    ),
-  },
-];
+    {
+      title: 'Name',
+      key: 'name',
+      render: (_, record) => `${record.first_name} ${record.last_name}`,
+      sorter: (a, b) =>
+        `${a.first_name} ${a.last_name}`.localeCompare(`${b.first_name} ${b.last_name}`),
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Department',
+      dataIndex: 'department',
+      key: 'department',
+      filters: Array.from(new Set(employees.map(e => e.department))).map(dept => ({
+        text: dept,
+        value: dept,
+      })),
+      onFilter: (value: boolean | Key, record) => record.department === value.toString(),
+    },
+    {
+      title: 'Designation',
+      dataIndex: 'designation',
+      key: 'designation',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (status: string) => {
+        let color = 'green';
+        if (status === 'inactive') color = 'volcano';
+        else if (status === 'on_leave') color = 'geekblue';
+        else if (status === 'terminated') color = 'red';
 
+        return <Tag color={color}>{status.toUpperCase().replace('_', ' ')}</Tag>;
+      },
+      filters: [
+        { text: 'Active', value: 'active' },
+        { text: 'Inactive', value: 'inactive' },
+        { text: 'On Leave', value: 'on_leave' },
+        { text: 'Terminated', value: 'terminated' },
+      ],
+      onFilter: (value: boolean | Key, record) => record.status === value.toString(),
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_, record) => (
+        <Space size="middle">
+          <Button type="text" icon={<EditOutlined />} onClick={() => showEditModal(record)} />
+          <Popconfirm
+            title="Are you sure you want to delete this employee?"
+            onConfirm={() => handleDelete(record.id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button type="text" danger icon={<DeleteOutlined />} />
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
 
-  // This is a placeholder component for now
-  // In a real implementation, we would have a complete form with all employee fields
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+    <div className="employees-page-container">
+      <div className="employees-page-header">
         <Title level={2}>Employees</Title>
         <Space>
           <Input
+            className="employee-search-input"
             placeholder="Search employees"
             prefix={<SearchOutlined />}
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
             style={{ width: 250 }}
           />
-          <Button 
-            type="primary" 
-            icon={<PlusOutlined />} 
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            className="employee-add-btn"
             onClick={showAddModal}
           >
             Add Employee
@@ -220,11 +224,12 @@ const EmployeesPage: React.FC = () => {
         </Space>
       </div>
 
-      <Table 
-        columns={columns} 
-        dataSource={filteredEmployees} 
+      <Table
+        columns={columns}
+        dataSource={filteredEmployees}
         rowKey="id"
         loading={loading}
+        scroll={{ x: 'max-content' }}
       />
 
       <Modal
@@ -233,6 +238,7 @@ const EmployeesPage: React.FC = () => {
         onOk={handleSubmit}
         onCancel={handleCancel}
         width={800}
+        destroyOnClose
       >
         <Form
           form={form}
@@ -245,8 +251,6 @@ const EmployeesPage: React.FC = () => {
           >
             <Input prefix={<UserOutlined />} placeholder="EMP001" />
           </Form.Item>
-
-          {/* This is a simplified form. In a real app, you would include all employee fields */}
           <Form.Item
             name="first_name"
             label="First Name"
@@ -254,7 +258,6 @@ const EmployeesPage: React.FC = () => {
           >
             <Input placeholder="John" />
           </Form.Item>
-
           <Form.Item
             name="last_name"
             label="Last Name"
@@ -262,7 +265,6 @@ const EmployeesPage: React.FC = () => {
           >
             <Input placeholder="Doe" />
           </Form.Item>
-
           <Form.Item
             name="email"
             label="Email"
@@ -273,7 +275,6 @@ const EmployeesPage: React.FC = () => {
           >
             <Input placeholder="john.doe@example.com" />
           </Form.Item>
-
           <Form.Item
             name="department"
             label="Department"
@@ -288,7 +289,6 @@ const EmployeesPage: React.FC = () => {
               <Option value="Operations">Operations</Option>
             </Select>
           </Form.Item>
-
           <Form.Item
             name="designation"
             label="Designation"
@@ -296,7 +296,6 @@ const EmployeesPage: React.FC = () => {
           >
             <Input placeholder="Software Engineer" />
           </Form.Item>
-
           <Form.Item
             name="date_of_joining"
             label="Date of Joining"
@@ -304,7 +303,6 @@ const EmployeesPage: React.FC = () => {
           >
             <DatePicker style={{ width: '100%' }} />
           </Form.Item>
-
           <Form.Item
             name="status"
             label="Status"

@@ -1,0 +1,515 @@
+/* DashboardPage.css */
+
+/* Overall container */
+.dashboard-container {
+  padding: 28px 16px 40px 16px;
+  background: linear-gradient(135deg, #eef2f9 0%, #ebf8ff 100%);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Dashboard header */
+.dashboard-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f1f3;
+}
+
+.dashboard-header-content {
+  min-width: 250px;
+}
+.dashboard-header-subtitle {
+  color: #6b7280;
+  font-size: 16px;
+  margin-top: 4px;
+  display: block;
+}
+
+.dashboard-last-updated {
+  color: #0f766e;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  background: #e6f6f2;
+  padding: 4px 12px;
+  border-radius: 16px;
+}
+
+/* Stats Cards */
+.dashboard-stats-grid {
+  margin: 22px 0 40px 0;
+}
+
+.dashboard-stats-row {
+  width: 100%;
+  gap: 24px 0;
+}
+
+.dashboard-stats-col {
+  padding: 0 12px;
+  margin-bottom: 18px;
+}
+
+.dashboard-stat-card {
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 2px 12px 0 rgba(59, 130, 246, 0.06),0 1.5px 10px 0 rgba(10,120,220,0.04);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: box-shadow 0.18s;
+}
+
+.dashboard-stat-card:hover {
+  box-shadow: 0 3px 20px 0 rgba(59,130,246, 0.12);
+}
+
+.dashboard-stat-content {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 22px;
+}
+
+.dashboard-stat-info {
+  flex: 1;
+}
+
+.dashboard-stat-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.dashboard-stat-value {
+  font-size: 26px;
+  font-weight: bold;
+  color: #063970;
+  margin-top: 2px;
+}
+
+.dashboard-stat-trend {
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.dashboard-stat-trend.positive {
+  color: #10b981;
+}
+.dashboard-stat-trend.negative {
+  color: #ef4444;
+}
+
+.dashboard-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #fff;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.07);
+}
+
+/* Charts Section */
+.dashboard-charts-section {
+  margin-bottom: 38px;
+}
+.dashboard-charts-row {
+  width: 100%;
+  gap: 28px 0;
+}
+.dashboard-charts-col {
+  padding: 0 12px 24px 12px;
+}
+
+.dashboard-chart-card {
+  background: rgba(255,255,255,0.8);
+  border-radius: 18px;
+  box-shadow: 0 1px 8px 0 rgba(16, 185, 129, 0.05);
+  padding: 20px 20px 10px 20px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-chart-header {
+  margin-bottom: 10px;
+}
+
+.dashboard-chart-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard-chart-content {
+  flex: 1;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Charts: make them responsive */
+.dashboard-chart-content canvas {
+  width: 100% !important;
+  max-width: 100%;
+  height: 220px !important;
+  max-height: 100%;
+}
+
+/* Tables Section */
+.dashboard-tables-section {
+  width: 100%;
+}
+.dashboard-tables-row {
+  width: 100%;
+  gap: 26px 0;
+}
+
+.dashboard-tables-col {
+  padding: 0 12px 22px 12px;
+}
+
+.dashboard-table-card {
+  background: rgba(255,255,255,0.85);
+  border-radius: 18px;
+  box-shadow: 0 1.5px 10px 0 rgba(149, 189, 236, 0.06);
+  padding: 20px 16px 8px 16px;
+  min-height: 310px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-table-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.dashboard-table-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dashboard-table-count {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.dashboard-table-content {
+  flex: 1;
+   overflow-x: auto;
+}
+
+/* Table styles */
+.dashboard-table {
+  background: transparent !important;
+  border-radius: 9px;
+}
+
+/* Employee table row */
+.employee-info {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.employee-avatar {
+  width: 33px;
+  height: 33px;
+  background: linear-gradient(135deg,#dbeafe 0%, #93c5fd 100%);
+  color: #234ca2;
+  border-radius: 50%;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  margin-right: 2px;
+  box-shadow: 0 2px 6px 0 rgba(59, 130, 246, 0.08);
+}
+.employee-name {
+  font-weight: 500;
+  color: #283042;
+}
+
+.employee-id-badge {
+  background: #e0e7ff;
+  color: #3730a3;
+  font-size: 13px;
+  padding: 2px 7px;
+  border-radius: 9px;
+  font-weight: 500;
+}
+
+.department-badge {
+  font-size: 13px;
+  background: #fef3c7;
+  color: #a16207;
+  padding: 2px 8px;
+  border-radius: 7px;
+  font-weight: 500;
+}
+
+/* Payroll Status Badge */
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+.status-badge.paid {
+  background: #e7f9ee;
+  color: #1dbb77;
+}
+.status-badge.approved {
+  background: #fefee9;
+  color: #9ca10c;
+}
+.status-badge.processing {
+  background: #e6f0fa;
+  color: #2563eb;
+  font-weight: 600;
+}
+.status-badge.draft {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* Empty Ant Design component overrides */
+.ant-empty-description {
+  color: #7b8794 !important;
+  font-size: 16px !important;
+}
+
+/* Loader */
+.dashboard-loading {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.dashboard-loading-text {
+  font-size: 17px;
+  color: #1e293b;
+  margin-top: 14px;
+  font-weight: 500;
+}
+/* --- Stat Cards: Add horizontal scroll if needed --- */
+.dashboard-stats-grid,
+.dashboard-charts-section,
+.dashboard-tables-section {
+  width: 100%;
+}
+
+.dashboard-stats-row,
+.dashboard-charts-row,
+.dashboard-tables-row {
+  width: 100%;
+}
+
+.dashboard-stats-col,
+.dashboard-charts-col,
+.dashboard-tables-col {
+  padding: 0 12px 24px 12px;
+}
+
+.dashboard-stat-card,
+.dashboard-chart-card,
+.dashboard-table-card {
+  background: rgba(255,255,255,0.85);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px 0 rgba(59, 130, 246, 0.06), 0 1.5px 10px 0 rgba(10,120,220,0.04);
+  padding: 20px 16px 8px 16px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  /* HORIZONTAL SCROLL if needed */
+  overflow-x: auto;
+  /* Prevent content from being cut off */
+  word-break: break-word;
+}
+
+/* Cards: No text hidden */
+.dashboard-stat-card,
+.dashboard-chart-card,
+.dashboard-table-card {
+  min-width: 0;
+}
+
+/* (rest of your component-specific stylings, no changes needed) */
+
+/* Table content: force scroll if overflow */
+.dashboard-table-content {
+  flex: 1;
+  overflow-x: auto;
+}
+.dashboard-table .ant-table-content {
+  min-width: 480px;
+  overflow-x: auto;
+  background: white;
+}
+
+@media (max-width: 992px) {
+  .dashboard-stats-row,
+  .dashboard-charts-row,
+  .dashboard-tables-row {
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+  .dashboard-stats-col,
+  .dashboard-charts-col,
+  .dashboard-tables-col {
+    padding: 0 0 18px 0;
+  }
+  .dashboard-stats-col,
+  .dashboard-stats-row > .ant-col,
+  .dashboard-charts-col,
+  .dashboard-charts-row > .ant-col,
+  .dashboard-tables-col,
+  .dashboard-tables-row > .ant-col  {
+    min-width: 100% !important;
+    flex: 1 1 100%;
+    max-width: 100% !important;
+  }
+}
+@media (max-width: 600px) {
+  .dashboard-table-card,
+  .dashboard-table-content,
+  .dashboard-table .ant-table-content,
+  .dashboard-table .ant-table-cell,
+  .dashboard-table .ant-table-thead > tr > th,
+  .dashboard-table .ant-table-tbody > tr > td {
+    color: #000 !important;       /* Force black text */
+    background: rgba(255,255,255,0.97) !important; /* Force white card/table bg */
+  }
+}
+@media (max-width: 600px) {
+  .dashboard-table-content {
+    overflow-x: auto !important;
+    width: 200% !important;
+  }
+  .dashboard-table .ant-table-content {
+    min-width: 600px !important;
+    overflow-x: auto !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-stat-card,
+  .dashboard-chart-card,
+  .dashboard-table-card {
+    padding: 10px 8px 6px 8px !important;
+    border-radius: 12px !important;
+    min-width: 0;
+    overflow-x: auto;
+  }
+  .dashboard-chart-card {
+    height: 260px;
+    min-height: 200px;
+  }
+  .dashboard-chart-content {
+    min-height: 100px;
+    color: #063970;
+  }
+  .dashboard-table-content {
+    overflow-x: auto;
+    color: #063970;
+    overflow-x: auto !important;
+  }
+  .dashboard-table .ant-table-content {
+    min-width: 600px;
+    overflow-x: auto !important;
+  }
+  .dashboard-stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+}
+
+
+@media (max-width: 992px) {
+  .dashboard-stats-row,
+  .dashboard-charts-row,
+  .dashboard-tables-row {
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+  .dashboard-stats-col,
+  .dashboard-charts-col,
+  .dashboard-tables-col {
+    padding: 0 0 18px 0;
+  }
+  .dashboard-stats-col,
+  .dashboard-stats-row > .ant-col,
+  .dashboard-charts-col,
+  .dashboard-charts-row > .ant-col,
+  .dashboard-tables-col,
+  .dashboard-tables-row > .ant-col  {
+    min-width: 100% !important;
+    flex: 1 1 100%;
+    max-width: 100% !important;
+  }
+}
+
+/* Make sure horizontal scroll for tables or wide content on mobile */
+@media (max-width: 600px) {
+  .dashboard-stats-grid, .dashboard-charts-section, .dashboard-tables-section {
+    margin: 0;
+  }
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .dashboard-header-content {
+    width: 100%;
+  }
+  .dashboard-chart-card, .dashboard-table-card, .dashboard-stat-card {
+    padding: 10px 8px 6px 8px !important;
+    border-radius: 12px !important;
+  }
+  .dashboard-chart-card {
+    height: 260px;
+    min-height: 200px;
+  }
+  .dashboard-chart-content {
+    min-height: 100px;
+  }
+  .dashboard-table-content {
+    overflow-x: auto;
+    color: #000;
+  }
+  .dashboard-table .ant-table-content {
+    min-width: 480px;
+    color: #000;
+  }
+  .dashboard-stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+}

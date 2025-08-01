@@ -1,0 +1,213 @@
+/* Layout */
+.layout {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f6fbff 0%, #eaedfb 100%);
+}
+
+/* Header */
+.ant-layout-header {
+  background: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(60, 80, 255, 0.05);
+  padding: 0 8vw !important;
+  transition: background 0.2s;
+}
+
+.header-title {
+  margin: 0;
+  color: #2248c9;
+  font-weight: 800;
+  font-family: 'Segoe UI', 'Nunito', Arial, sans-serif;
+  text-shadow: 0 1px 3px rgba(34, 72, 201,0.06);
+}
+
+.logo-img {
+  height: 44px;
+  margin-right: 20px;
+  border-radius: 12px;
+  background: #e8edfa;
+  padding: 6px;
+}
+
+/* Content */
+.ant-layout-content {
+  padding: 32px 2vw 56px 2vw !important;
+  background: transparent !important;
+}
+
+.home-main-content {
+  max-width: 1240px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Typography */
+.ant-typography {
+  font-family: 'Inter', 'Nunito', Arial, sans-serif;
+}
+
+.ant-typography-title {
+  letter-spacing: 0.6px;
+  color: #23319d;
+  font-weight: 700;
+}
+
+.ant-typography-paragraph {
+  color: #6461af;
+}
+
+/* Cards section */
+.home-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  margin: 36px 0 44px 0;
+}
+
+/* Ant Design Card Styling */
+.ant-card {
+  width: 320px !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 20px 3px rgba(118, 138, 255, .09);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none !important;
+  background: linear-gradient(135deg, #f7f9fc 70%, #eaf1fd 100%);
+}
+
+.ant-card:hover, .ant-card:focus-within {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 4px 28px 8px rgba(76, 98, 255, .20);
+}
+
+.ant-card-cover img {
+  border-radius: 15px 15px 0 0 !important;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background: #f3f3fc;
+}
+
+.ant-card-meta-title {
+  color: #2842e1;
+  font-weight: 700 !important;
+  font-size: 1.15rem !important;
+}
+
+.ant-card-meta-description {
+  color: #695ccc;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+/* Main Call to Action Button */
+.home-main-btn {
+  background: linear-gradient(94deg,#466fff 20%,#8494e5 100%);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 1px rgba(76, 110, 255, 0.14);
+  color: #fff !important;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  margin-top: 18px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.home-main-btn:hover, .home-main-btn:focus {
+  background: linear-gradient(270deg, #466fff 48%, #5362e1 100%);
+  box-shadow: 0 4px 24px 2px rgba(34, 72, 201,0.11);
+  color: #fff !important;
+}
+
+/* Footer */
+.ant-layout-footer {
+  background: #fff !important;
+  text-align: center;
+  padding: 32px 0 16px 0;
+  font-size: 1rem;
+  color: #7d8ab3;
+  border-top: 1px solid #e7ebf7;
+}
+
+.ant-layout-footer .ant-typography-paragraph:last-child {
+  margin-top: -10px;
+  color: #b4bad8;
+  font-size: 0.98em;
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+  .ant-layout-header {
+    padding: 0 2vw !important;
+  }
+  .home-main-content, .ant-layout-footer > div {
+    max-width: 98vw;
+  }
+  .header-title {
+    font-size: 1.1rem !important;
+  }
+  .ant-card {
+    width: 275px !important;
+  }
+  .ant-card-cover img {
+    height: 145px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ant-layout-header {
+    flex-direction: column!important;
+    align-items: flex-start !important;
+    padding: 12px 3vw !important;
+  }
+  .home-main-content {
+    padding: 0;
+  }
+  .home-cards-row {
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    margin: 28px 0 28px 0;
+  }
+  .ant-card {
+    width: 93vw !important;
+    min-width: 0 !important;
+    margin: 0 auto;
+  }
+  .ant-card-cover img {
+    height: 30vw;
+    min-height: 100px;
+    max-height: 160px;
+  }
+  .home-main-btn, .ant-btn {
+    width: 100%;
+    min-width: unset;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    font-size: 1em !important;
+    height: 48px !important;
+  }
+  .ant-layout-footer {
+    font-size: 0.95em;
+    padding: 22px 0 10px 0;
+  }
+  .logo-img {
+    margin-right: 12px;
+    height: 34px;
+    padding: 4px;
+  }
+}
+
+@media (max-width: 450px) {
+  .ant-layout-header > div, .ant-layout-header .ant-btn {
+    width: 100%;
+    justify-content: center !important;
+    margin-bottom: 5px !important;
+  }
+  .home-main-content, .ant-layout-footer > div {
+    padding: 0 2vw;
+  }
+  .ant-typography-title {
+    font-size: 1.3em !important;
+  }
+}
+

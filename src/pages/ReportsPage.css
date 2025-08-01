@@ -1,0 +1,164 @@
+/* General Container */
+.reports-root {
+  background: linear-gradient(120deg, #f0f7ff 0%, #eaf6fb 50%, #f2f2f2 100%);
+  min-height: 100vh;
+  padding: 24px 8px 48px 8px;
+}
+
+@media (min-width: 768px) {
+  .reports-root {
+    padding: 40px 40px 60px 40px;
+  }
+}
+
+/* Page Title */
+.reports-title {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+  color: #0057b7;
+  margin-bottom: 28px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* Ant Design Card */
+.ant-card {
+  border-radius: 14px !important;
+  box-shadow: 0 2px 18px -2px #dde8f3;
+  overflow-x: auto;
+}
+
+.ant-card-head-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* Statistic Section */
+.reports-statistics .ant-col {
+  text-align: center;
+}
+
+.reports-statistics .ant-statistic-title {
+  color: #20639b;
+  font-weight: 500;
+}
+
+.reports-statistics .ant-statistic-content {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #142850;
+}
+
+/* Tabs */
+.ant-tabs-nav {
+  margin-bottom: 24px !important;
+  background: #fff;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 1px 7px -2px #c6d6e5;
+}
+
+.ant-tabs-tab {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Forms */
+.ant-form-item-label label {
+  color: #214b88 !important;
+  font-weight: 500;
+}
+
+.ant-input,
+.ant-picker,
+.ant-select-selector {
+  border-radius: 8px !important;
+  min-height: 38px;
+}
+
+/* Form Button */
+.ant-btn-primary {
+  background: linear-gradient(90deg, #348fff 10%, #62e0ff 90%);
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background: linear-gradient(90deg, #344fff 10%, #34deff 90%);
+  opacity: 0.95;
+}
+
+/* Chart and Table Responsive Scroll */
+@media (max-width: 991px) {
+  .ant-card-body {
+    padding: 8px !important;
+  }
+}
+
+.responsive-table-wrapper,
+.responsive-chart-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 14px;
+}
+
+.responsive-table-wrapper .ant-table {
+  min-width: 600px;
+}
+
+.responsive-chart-wrapper {
+  min-width: 350px;
+}
+
+/* Table tweaks */
+.ant-table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ant-empty-normal {
+  padding: 25px 0;
+}
+
+.ant-table-thead > tr > th {
+  background: #e3efff;
+  color: #145690;
+  font-weight: 600;
+}
+
+/* Card Extras (Export Buttons) */
+.ant-card-extra {
+  padding-right: 8px;
+}
+
+.ant-card-extra .ant-btn {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 0 7px -1px #ecf3fa;
+}
+
+.ant-card .ant-btn .anticon {
+  font-size: 1.06rem;
+}
+
+/* Charts padding for mobile */
+@media (max-width: 767px) {
+  .ant-card {
+    margin-bottom: 18px;
+  }
+  .ant-statistic-content {
+    font-size: 1.15rem !important;
+  }
+}
+/* Add some more breathing room on mobile */
+@media (max-width: 480px) {
+  .reports-root {
+    padding: 8px 0 32px 0;
+  }
+  .ant-tabs-nav {
+    font-size: 0.92rem;
+  }
+}
+

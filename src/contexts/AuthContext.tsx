@@ -109,30 +109,38 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     initializeAuth();
 
-    // Set up a listener for auth changes
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, newSession) => {
-        if (newSession) {
-          setSession(newSession as Session);
-          
-          const userResponse = await getCurrentUser();
-          const currentUser = userResponse.data?.user;
-          
-          if (currentUser) {
-            setUser(currentUser as User);
+    // Set up a listener for auth changes (only if not using mock data)
+    const useMockData = process.env.REACT_APP_ENABLE_MOCK_DATA === 'true';
+    let authListener: any = null;
+    
+    if (!useMockData) {
+      const { data } = supabase.auth.onAuthStateChange(
+        async (event: any, newSession: any) => {
+          if (newSession) {
+            setSession(newSession as Session);
+            
+            const userResponse = await getCurrentUser();
+            const currentUser = userResponse.data?.user;
+            
+            if (currentUser) {
+              setUser(currentUser as User);
+            }
+          } else {
+            setSession(null);
+            setUser(null);
           }
-        } else {
-          setSession(null);
-          setUser(null);
+          
+          setLoading(false);
         }
-        
-        setLoading(false);
-      }
-    );
+      );
+      authListener = data;
+    }
 
     // Clean up the listener when the component unmounts
     return () => {
-      authListener?.subscription.unsubscribe();
+      if (authListener?.subscription) {
+        authListener.subscription.unsubscribe();
+      }
     };
   }, []);
 
@@ -156,12 +164,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
       
       // If not using demo credentials, try actual Supabase auth
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      
-      return { data, error };
+      const useMockData = process.env.REACT_APP_ENABLE_MOCK_DATA === 'true';
+      if (!useMockData) {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        
+        return { data, error };
+      } else {
+        // Return error for invalid credentials in mock mode
+        return {
+          data: null,
+          error: { message: 'Invalid credentials. Use admin@example.com / password123 for demo.' }
+        };
+      }
     } catch (error) {
       console.error('Error signing in:', error);
       return { data: null, error };
@@ -171,7 +188,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Sign out function
   const signOut = async () => {
     try {
-      await supabase.auth.signOut();
+      const useMockData = process.env.REACT_APP_ENABLE_MOCK_DATA === 'true';
+      if (!useMockData) {
+        await supabase.auth.signOut();
+      }
       setUser(null);
       setSession(null);
     } catch (error) {

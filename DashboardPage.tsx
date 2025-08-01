@@ -16,8 +16,12 @@ import {
   ClockCircleOutlined,
   WarningOutlined
 } from '@ant-design/icons';
-import { supabase } from './supabase-client';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+// import your Supabase client if/when you use actual API calls
+// import { supabase } from './supabase-client';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
+import './DashboardPagee.css';
 
 const { Title } = Typography;
 
@@ -43,7 +47,7 @@ interface PendingPayment {
   status: string;
 }
 
-interface Alert {
+interface AlertData {
   key: string;
   type: string;
   message: string;
@@ -62,7 +66,7 @@ const DashboardPage: React.FC = () => {
   });
   const [departmentSalaries, setDepartmentSalaries] = useState<DepartmentSalary[]>([]);
   const [pendingPayments, setPendingPayments] = useState<PendingPayment[]>([]);
-  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [alerts, setAlerts] = useState<AlertData[]>([]);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -70,21 +74,13 @@ const DashboardPage: React.FC = () => {
       setError(null);
 
       try {
-        // In a real application, these would be actual API calls to Supabase
-        // For now, we'll use mock data
-
-        // Fetch dashboard stats
-        // const { data: statsData, error: statsError } = await supabase.rpc('get_dashboard_stats');
-        // if (statsError) throw statsError;
-        
-        // Mock data for demonstration
+        // Use your API/Supabase calls here; below is mock data.
         const statsData = {
           total_employees: 156,
           total_salary: 7850000,
           pending_payments: 12,
           alerts: 5
         };
-
         setStats({
           totalEmployees: statsData.total_employees,
           totalSalary: statsData.total_salary,
@@ -92,11 +88,6 @@ const DashboardPage: React.FC = () => {
           alerts: statsData.alerts
         });
 
-        // Fetch department salaries
-        // const { data: deptData, error: deptError } = await supabase.rpc('get_department_salaries');
-        // if (deptError) throw deptError;
-        
-        // Mock data for demonstration
         const deptData = [
           { department: 'Engineering', employees: 45, totalSalary: 2500000 },
           { department: 'Marketing', employees: 30, totalSalary: 1500000 },
@@ -105,14 +96,8 @@ const DashboardPage: React.FC = () => {
           { department: 'Operations', employees: 35, totalSalary: 1600000 },
           { department: 'Sales', employees: 6, totalSalary: 400000 }
         ];
-
         setDepartmentSalaries(deptData);
 
-        // Fetch pending payments
-        // const { data: paymentsData, error: paymentsError } = await supabase.rpc('get_pending_payments');
-        // if (paymentsError) throw paymentsError;
-        
-        // Mock data for demonstration
         const paymentsData = [
           { key: '1', employee: 'John Doe', department: 'Engineering', amount: 85000, dueDate: '2023-07-31', status: 'pending' },
           { key: '2', employee: 'Jane Smith', department: 'Marketing', amount: 65000, dueDate: '2023-07-31', status: 'pending' },
@@ -120,14 +105,8 @@ const DashboardPage: React.FC = () => {
           { key: '4', employee: 'Emily Davis', department: 'HR', amount: 60000, dueDate: '2023-07-31', status: 'pending' },
           { key: '5', employee: 'Michael Wilson', department: 'Operations', amount: 70000, dueDate: '2023-07-31', status: 'pending' }
         ];
-
         setPendingPayments(paymentsData);
 
-        // Fetch alerts
-        // const { data: alertsData, error: alertsError } = await supabase.rpc('get_alerts');
-        // if (alertsError) throw alertsError;
-        
-        // Mock data for demonstration
         const alertsData = [
           { key: '1', type: 'Document Expiry', message: 'Passport for John Doe expires in 30 days', date: '2023-08-25', severity: 'medium' },
           { key: '2', type: 'Salary Anomaly', message: 'Unusual increase in overtime for Marketing department', date: '2023-07-26', severity: 'low' },
@@ -135,11 +114,9 @@ const DashboardPage: React.FC = () => {
           { key: '4', type: 'Document Expiry', message: 'Work permit for Jane Smith expires in 15 days', date: '2023-08-10', severity: 'high' },
           { key: '5', type: 'System', message: 'Database backup failed', date: '2023-07-25', severity: 'medium' }
         ];
-
         setAlerts(alertsData);
 
-      } catch (err: any) {
-        console.error('Error fetching dashboard data:', err);
+      } catch (err) {
         setError('Failed to load dashboard data. Please try again later.');
       } finally {
         setLoading(false);
@@ -237,13 +214,13 @@ const DashboardPage: React.FC = () => {
   }
 
   return (
-    <div>
-      <Title level={2}>Dashboard</Title>
+    <div className="dashboard-root">
+      <Title level={2} className="dashboard-title">Dashboard</Title>
       
       {/* Stats Cards */}
       <Row gutter={16} style={{ marginBottom: 24 }}>
         <Col xs={24} sm={12} lg={6}>
-          <Card>
+          <Card className="dashboard-card">
             <Statistic
               title="Total Employees"
               value={stats.totalEmployees}
@@ -252,7 +229,7 @@ const DashboardPage: React.FC = () => {
           </Card>
         </Col>
         <Col xs={24} sm={12} lg={6}>
-          <Card>
+          <Card className="dashboard-card">
             <Statistic
               title="Monthly Salary"
               value={stats.totalSalary}
@@ -263,7 +240,7 @@ const DashboardPage: React.FC = () => {
           </Card>
         </Col>
         <Col xs={24} sm={12} lg={6}>
-          <Card>
+          <Card className="dashboard-card">
             <Statistic
               title="Pending Payments"
               value={stats.pendingPayments}
@@ -272,7 +249,7 @@ const DashboardPage: React.FC = () => {
           </Card>
         </Col>
         <Col xs={24} sm={12} lg={6}>
-          <Card>
+          <Card className="dashboard-card">
             <Statistic
               title="Alerts"
               value={stats.alerts}
@@ -283,16 +260,11 @@ const DashboardPage: React.FC = () => {
       </Row>
       
       {/* Department Salary Chart */}
-      <Card title="Department-wise Salary Distribution" style={{ marginBottom: 24 }}>
+      <Card className="dashboard-card dashboard-bar-chart" title="Department-wise Salary Distribution" style={{ marginBottom: 24 }}>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart
             data={departmentSalaries}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="department" />
@@ -306,7 +278,7 @@ const DashboardPage: React.FC = () => {
       </Card>
       
       {/* Pending Payments Table */}
-      <Card title="Pending Salary Payments" style={{ marginBottom: 24 }}>
+      <Card className="dashboard-card" title="Pending Salary Payments" style={{ marginBottom: 24 }}>
         <Table 
           columns={paymentColumns} 
           dataSource={pendingPayments} 
@@ -315,7 +287,7 @@ const DashboardPage: React.FC = () => {
       </Card>
       
       {/* Alerts Table */}
-      <Card title="Alerts & Reminders">
+      <Card className="dashboard-card" title="Alerts & Reminders">
         <Table 
           columns={alertColumns} 
           dataSource={alerts} 

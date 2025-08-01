@@ -1,0 +1,183 @@
+/* Base layout */
+div.salary-structure-page-main {
+  padding: 24px;
+  background: #f7f9fb;
+  min-height: 100vh;
+}
+
+.ant-tabs {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.08);
+  padding: 12px 12px 0 12px;
+}
+
+/* Page Title */
+.salary-structure-page-main .ant-typography {
+  color: #1c2942;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+/* Top Add Button */
+.salary-structure-page-main .ant-btn-primary {
+  background: linear-gradient(90deg, #21c87a 0%, #26bee6 100%);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow: 0 8px 24px #26bee521;
+  transition: background 0.3s;
+}
+.salary-structure-page-main .ant-btn-primary:hover, 
+.salary-structure-page-main .ant-btn-primary:focus {
+  background: linear-gradient(90deg, #159f5c 0%, #118ec7 100%);
+  color: #fff;
+}
+
+/* Card for Earning/Deduction Split */
+.salary-structure-page-main .ant-card {
+  background: #f8fafb;
+  border: 1px solid #e0e7ef;
+  box-shadow: 0 1px 12px #2ec0be11;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  padding: 10px;
+}
+
+/* Panel Titles */
+.salary-structure-page-main .ant-typography.ant-typography-secondary {
+  color: #aaaa;
+}
+
+/* Earnings & Deductions Block */
+.salary-structure-page-main .ant-card .ant-typography {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.salary-structure-page-main .ant-card ul {
+  padding-left: 18px;
+  list-style: disc inside;
+}
+.salary-structure-page-main .ant-card ul li {
+  font-size: 1rem;
+  margin-bottom: 4px;
+  color: #214c7a;
+  letter-spacing: 0.01em;
+}
+.salary-structure-page-main .ant-divider-vertical {
+  min-height: 80px;
+  background: linear-gradient(#e8ecef 0%, #bebfc1 100%);
+}
+
+/* Table customizations */
+.salary-structure-page-main .ant-table {
+  background: #fff;
+  font-size: 15px;
+  border-radius: 9px;
+  box-shadow: 0 2px 14px #1d87db0c;
+}
+
+/* Table tags */
+.salary-structure-page-main .ant-tag-green {
+  background: #e7ffe9;
+  color: #219876;
+  border: none;
+  font-weight: 500;
+}
+.salary-structure-page-main .ant-tag-red {
+  background: #ffeaea;
+  color: #e63838;
+  border: none;
+  font-weight: 500;
+}
+.salary-structure-page-main .ant-tag-blue {
+  background: #e7f2ff;
+  color: #2565c5;
+  border: none;
+  font-weight: 500;
+}
+.salary-structure-page-main .ant-tag-default {
+  background: #f0f1f2;
+  color: #444;
+  border: none;
+}
+
+/* Action Buttons in Table */
+.salary-structure-page-main .ant-btn[icon-only] {
+  padding: 5px !important;
+}
+.salary-structure-page-main .ant-btn.ant-btn-text {
+  color: #328be6;
+}
+.salary-structure-page-main .ant-btn.ant-btn-text:hover {
+  background: #e9f3ff;
+  color: #1c2942;
+}
+.salary-structure-page-main .ant-btn-dangerous.ant-btn-text {
+  color: #e44754;
+}
+
+/* Modal Styling */
+.salary-structure-page-main .ant-modal {
+  border-radius: 14px !important;
+  box-shadow: 0 8px 32px #1c1b6319;
+}
+.salary-structure-page-main .ant-modal-content {
+  padding: 26px 30px;
+  background: #f3fbfa;
+}
+
+/* Modal Form */
+.salary-structure-page-main .ant-form-vertical .ant-form-item-label > label {
+  color: #4e6780;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.salary-structure-page-main .ant-form-vertical .ant-input,
+.salary-structure-page-main .ant-form-vertical .ant-select-selector,
+.salary-structure-page-main .ant-form-vertical .ant-input-number {
+  border-radius: 6px;
+  border: 1px solid #e3e9ef !important;
+  background: #fcfdff;
+}
+.salary-structure-page-main .ant-form-vertical .ant-input:focus,
+.salary-structure-page-main .ant-form-vertical .ant-select-focused .ant-select-selector,
+.salary-structure-page-main .ant-form-vertical .ant-input-number:focus {
+  border-color: #21c87a;
+  box-shadow: 0 0 6px #08daae26;
+}
+
+/* Switches */
+.salary-structure-page-main .ant-switch-checked {
+  background: linear-gradient(90deg, #21c87a 0%, #26bee6 100%) !important;
+}
+
+/* Responsive design */
+@media (max-width: 767px) {
+  div.salary-structure-page-main {
+    padding: 8px;
+  }
+  .salary-structure-page-main .ant-tabs {
+    padding: 5px 2px 0 2px;
+    border-radius: 6px;
+  }
+  .salary-structure-page-main .ant-card .ant-typography {
+    font-size: 15px;
+  }
+  .salary-structure-page-main .ant-table {
+    font-size: 0.98rem;
+  }
+  .salary-structure-page-main .ant-table-thead > tr > th,
+  .salary-structure-page-main .ant-table-tbody > tr > td {
+    padding: 8px 8px;
+    white-space: normal;
+    word-break: break-word;
+  }
+  .salary-structure-page-main .ant-modal-content {
+    padding: 13px 7px;
+  }
+}

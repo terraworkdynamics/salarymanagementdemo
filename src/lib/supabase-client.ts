@@ -5,15 +5,55 @@ import mockApi from '../services/mockDataService';
 // Check if mock data is enabled
 const useMockData = process.env.REACT_APP_ENABLE_MOCK_DATA === 'true';
 
-// Initialize Supabase client
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY || '';
+// Create a mock client for development
+const createMockClient = () => ({
+  auth: {
+    signInWithPassword: async () => ({ data: null, error: null }),
+    signOut: async () => ({ error: null }),
+    getUser: async () => ({ data: { user: null }, error: null }),
+    getSession: async () => ({ data: { session: null }, error: null }),
+    onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } })
+  },
+  from: () => ({
+    select: () => ({
+      order: () => ({
+        limit: () => ({ data: [], error: null })
+      }),
+      eq: () => ({
+        single: () => ({ data: null, error: null })
+      }),
+      data: [],
+      error: null
+    }),
+    insert: () => ({ data: null, error: null }),
+    update: () => ({
+      eq: () => ({ data: null, error: null })
+    }),
+    delete: () => ({
+      eq: () => ({ data: null, error: null })
+    })
+  })
+});
 
-if (!useMockData && (!supabaseUrl || !supabaseAnonKey)) {
-  console.error('Supabase URL or Anon Key is missing. Please check your environment variables.');
+// Initialize Supabase client
+let supabase: any;
+
+if (useMockData) {
+  console.log('Using mock Supabase client for development');
+  supabase = createMockClient();
+} else {
+  const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+  const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error('Supabase URL or Anon Key is missing. Please check your environment variables.');
+    supabase = createMockClient();
+  } else {
+    supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
+  }
 }
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
+export { supabase };
 
 // Helper functions for common Supabase operations
 

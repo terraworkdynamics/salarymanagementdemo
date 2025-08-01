@@ -1,0 +1,245 @@
+/* payroll-page.css */
+
+body {
+  background: #f6f9fc;
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+/* Page container */
+.payroll-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 10px;
+  background: none;
+}
+
+/* Title styles */
+.payroll-title {
+  margin-bottom: 16px !important;
+  color: #185adb !important;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* Statistic Cards */
+.ant-card {
+  border-radius: 10px !important;
+  background: #fff !important;
+  overflow: visible !important;
+  box-shadow: 0 4px 18px rgba(44,91,187,.07);
+}
+
+.ant-statistic-content {
+  font-size: 1.8rem !important;
+  font-weight: 700 !important;
+}
+.ant-statistic-title {
+  color: #888 !important;
+  font-size: 1rem;
+}
+
+/* Payroll Periods Table */
+.payroll-table-wrapper {
+  margin-bottom: 32px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 0 0 12px 0;
+  box-shadow: 0 4px 18px rgba(44,91,187,.09);
+  overflow-x: auto;
+}
+.ant-table-wrapper {
+  overflow-x: auto;
+}
+
+/* Table itself */
+.ant-table {
+  min-width: 900px !important;
+  background: transparent !important;
+}
+@media (max-width: 799px) {
+  .ant-table {
+    min-width: 700px !important;
+  }
+}
+
+/* Steps Progress bar styling */
+.ant-steps {
+  margin: 0;
+}
+
+.ant-steps-item-title {
+  font-size: 0.94rem;
+}
+
+.ant-steps-item-process .ant-steps-item-icon {
+  background: #185adb !important;
+  border-color: #185adb !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon {
+  background: #44d091 !important;
+  border-color: #44d091 !important;
+}
+
+/* Table tag styling */
+.ant-tag {
+  font-size: 0.97rem;
+  letter-spacing: .5px;
+  border-radius: 7px !important;
+  padding: 3px 12px !important;
+}
+.ant-tag-green, .ant-tag-success {
+  background: #e9ffe6 !important;
+  color: #53b835 !important;
+}
+.ant-tag-purple {
+  background: #edeaff !important;
+  color: #8d6ee6 !important;
+}
+
+.ant-tag-blue {
+  background: #e0f1ff !important;
+  color: #1283d3 !important;
+}
+
+.ant-tag-orange {
+  background: #fff5e6 !important;
+  color: #e99300 !important;
+}
+
+/* Section Titles (H4) */
+.ant-typography[h4] {
+  margin-bottom: 8px !important;
+  color: #222882;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 600px) {
+  .ant-typography[h4] {
+    font-size: 1.05rem !important;
+  }
+}
+
+/* Action Buttons */
+.payroll-action-button, .ant-btn {
+  border-radius: 7px !important;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: .4px;
+  box-shadow: none !important;
+  transition: background .15s;
+}
+.payroll-action-button.ant-btn-primary {
+  background: linear-gradient(90deg,#185adb 70%,#3787ec);
+}
+.payroll-action-button.ant-btn-primary:hover  {
+  background: linear-gradient(90deg,#3787ec 80%,#185adb);
+}
+
+.payroll-action-button.ant-btn-default, .ant-btn-default {
+  background: #f6faff !important;
+  color: #222 !important;
+  border: 1px solid #dbefff !important;
+}
+
+.payroll-action-button.ant-btn-dangerous {
+  background: #ffdddd !important;
+  color: #b82828 !important;
+}
+
+/* Modal Styling */
+.ant-modal-content {
+  border-radius: 10px !important;
+  background: #fafdff !important;
+  box-shadow: 0 8px 32px rgba(24,90,219,0.12) !important;
+}
+
+.ant-modal-title {
+  color: #222882 !important;
+  font-weight: 700 !important;
+}
+
+/* Form appearance */
+.ant-form-item-label > label {
+  font-size: 1rem !important;
+  color: #21408a;
+  font-weight: 600;
+}
+
+.ant-input, .ant-picker, .ant-select-selector {
+  border-radius: 6px !important;
+  font-size: 0.96rem !important;
+}
+
+.ant-input:focus, .ant-picker-focused {
+  border-color: #3787ec !important;
+  box-shadow: 0 0 2px #3787ec;
+}
+
+/* Payslip Table section */
+.payslip-table-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px 0 22px 0;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 14px rgba(44,91,187,.08);
+  overflow-x: auto;
+}
+
+.payslip-table-wrapper {
+  overflow-x: auto;
+}
+.payslip-table-wrapper .ant-table {
+  min-width: 750px !important;
+}
+
+@media (max-width: 700px) {
+  .payslip-table-wrapper .ant-table {
+    min-width: 600px !important;
+  }
+}
+
+/* Responsive utility */
+@media (max-width: 700px) {
+  .ant-card, .payroll-table-wrapper, .payslip-table-section {
+    border-radius: 6px !important;
+    margin: 0 -8px;
+    box-shadow: 0 1px 6px rgba(44,91,187,.10);
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .ant-table {
+    font-size: 0.91rem;
+  }
+}
+
+/* Horizontal scroll for wide sections */
+.payroll-table-wrapper, 
+.payslip-table-section, 
+.payslip-table-wrapper {
+  overflow-x: auto !important;
+}
+
+::-webkit-scrollbar {
+  height: 7px;
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: #bedcef;
+  border-radius: 16px;
+}
+
+/* For mobile, make tables scrollable horizontally */
+@media (max-width: 600px) {
+  .ant-table-wrapper, .payroll-table-wrapper, .payslip-table-section, .payslip-table-wrapper {
+    overflow-x: scroll !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ant-table-content {
+    min-width: 600px !important;
+  }
+}
+

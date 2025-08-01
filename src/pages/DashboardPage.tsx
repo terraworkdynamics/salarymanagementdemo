@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Statistic, Table, Typography, Spin, Empty } from 'antd';
-import { 
-  TeamOutlined, 
-  BankOutlined, 
-  CreditCardOutlined, 
-  CalendarOutlined 
+import { Row, Col, Table, Typography, Empty, Spin } from 'antd';
+import {
+  UserOutlined,
+  DollarOutlined,
+  CreditCardOutlined,
+  CalendarOutlined,
+  RiseOutlined,
+  DashboardOutlined,
+  PieChartOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined
 } from '@ant-design/icons';
 import { Bar, Pie } from 'react-chartjs-2';
 import {
@@ -17,8 +22,9 @@ import {
   Legend,
   ArcElement,
 } from 'chart.js';
-import { supabase } from '../lib/supabase-client';
+import { fetchEmployees, fetchPayrollPeriods } from '../lib/supabase-client';
 import { Database } from '../types/database.types';
+import './DashboardPage.css';
 
 // Register ChartJS components
 ChartJS.register(
@@ -37,6 +43,9 @@ type Employee = Database['public']['Tables']['employees']['Row'];
 type PayrollPeriod = Database['public']['Tables']['payroll_periods']['Row'];
 
 const DashboardPage: React.FC = () => {
+  // --------- CSS: Place at Top of Component JSX -----------
+
+
   const [loading, setLoading] = useState<boolean>(true);
   const [employeeCount, setEmployeeCount] = useState<number>(0);
   const [departmentData, setDepartmentData] = useState<any>({});
@@ -48,24 +57,21 @@ const DashboardPage: React.FC = () => {
     const fetchDashboardData = async () => {
       setLoading(true);
       try {
-        // Fetch employee count
-        const { count } = await supabase
-          .from('employees')
-          .select('*', { count: 'exact', head: true });
-        
-        setEmployeeCount(count || 0);
+        // Fetch employees data
+        const { data: employeesData } = await fetchEmployees();
+        const employees = employeesData || [];
 
-        // Fetch department distribution
-        const { data: departmentDistribution } = await supabase
-          .from('employees')
-          .select('department');
-        
-        if (departmentDistribution) {
+        setEmployeeCount(employees.length);
+        setRecentEmployees(employees.slice(0, 5));
+
+        // Process department distribution
+        if (employees.length > 0) {
           const deptCounts: Record<string, number> = {};
-          departmentDistribution.forEach(emp => {
-            deptCounts[emp.department] = (deptCounts[emp.department] || 0) + 1;
+          employees.forEach((emp: any) => {
+            const dept = emp.department || 'Unknown';
+            deptCounts[dept] = (deptCounts[dept] || 0) + 1;
           });
-          
+
           setDepartmentData({
             labels: Object.keys(deptCounts),
             datasets: [
@@ -73,57 +79,46 @@ const DashboardPage: React.FC = () => {
                 label: 'Employees by Department',
                 data: Object.values(deptCounts),
                 backgroundColor: [
-                  'rgba(255, 99, 132, 0.6)',
-                  'rgba(54, 162, 235, 0.6)',
-                  'rgba(255, 206, 86, 0.6)',
-                  'rgba(75, 192, 192, 0.6)',
-                  'rgba(153, 102, 255, 0.6)',
+                  'rgba(59, 130, 246, 0.8)',
+                  'rgba(16, 185, 129, 0.8)',
+                  'rgba(245, 158, 11, 0.8)',
+                  'rgba(239, 68, 68, 0.8)',
+                  'rgba(139, 92, 246, 0.8)',
+                  'rgba(236, 72, 153, 0.8)',
                 ],
                 borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
+                  'rgba(59, 130, 246, 1)',
+                  'rgba(16, 185, 129, 1)',
+                  'rgba(245, 158, 11, 1)',
+                  'rgba(239, 68, 68, 1)',
+                  'rgba(139, 92, 246, 1)',
+                  'rgba(236, 72, 153, 1)',
                 ],
-                borderWidth: 1,
+                borderWidth: 2,
               },
             ],
           });
         }
 
-        // Fetch salary distribution (mock data for now)
-        // In a real app, you would fetch this from the database
+        // Enhanced salary distribution with modern colors
         setSalaryData({
           labels: ['0-30K', '30K-50K', '50K-75K', '75K-100K', '100K+'],
           datasets: [
             {
               label: 'Salary Distribution',
               data: [5, 12, 18, 8, 3],
-              backgroundColor: 'rgba(75, 192, 192, 0.6)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1,
+              backgroundColor: 'rgba(59, 130, 246, 0.8)',
+              borderColor: 'rgba(59, 130, 246, 1)',
+              borderWidth: 2,
+              borderRadius: 8,
             },
           ],
         });
 
         // Fetch recent payrolls
-        const { data: payrolls } = await supabase
-          .from('payroll_periods')
-          .select('*')
-          .order('period_end', { ascending: false })
-          .limit(5);
-        
-        setRecentPayrolls(payrolls || []);
-
-        // Fetch recent employees
-        const { data: employees } = await supabase
-          .from('employees')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .limit(5);
-        
-        setRecentEmployees(employees || []);
+        const { data: payrollsData } = await fetchPayrollPeriods();
+        const payrolls = payrollsData || [];
+        setRecentPayrolls(payrolls.slice(0, 5));
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
       } finally {
@@ -139,17 +134,33 @@ const DashboardPage: React.FC = () => {
       title: 'Name',
       dataIndex: 'first_name',
       key: 'name',
-      render: (_: string, record: Employee) => `${record.first_name} ${record.last_name}`,
+      render: (_: string, record: Employee) => (
+        <div className="employee-info">
+          <div className="employee-avatar">
+            {record.first_name.charAt(0)}
+            {record.last_name.charAt(0)}
+          </div>
+          <span className="employee-name">
+            {record.first_name} {record.last_name}
+          </span>
+        </div>
+      ),
     },
     {
       title: 'Employee ID',
       dataIndex: 'employee_id',
       key: 'employee_id',
+      render: (id: string) => (
+        <span className="employee-id-badge">{id}</span>
+      ),
     },
     {
       title: 'Department',
       dataIndex: 'department',
       key: 'department',
+      render: (dept: string) => (
+        <span className="department-badge">{dept}</span>
+      ),
     },
     {
       title: 'Designation',
@@ -160,6 +171,7 @@ const DashboardPage: React.FC = () => {
       title: 'Joining Date',
       dataIndex: 'date_of_joining',
       key: 'date_of_joining',
+      render: (date: string) => new Date(date).toLocaleDateString(),
     },
   ];
 
@@ -168,152 +180,285 @@ const DashboardPage: React.FC = () => {
       title: 'Period',
       dataIndex: 'period_name',
       key: 'period_name',
+      render: (name: string) => (
+        <span style={{ fontWeight: 500 }}>{name}</span>
+      ),
     },
     {
-      title: 'Start Date',
-      dataIndex: 'period_start',
-      key: 'period_start',
-    },
-    {
-      title: 'End Date',
-      dataIndex: 'period_end',
-      key: 'period_end',
+      title: 'Duration',
+      key: 'duration',
+      render: (_: any, record: PayrollPeriod) => (
+        <div style={{ fontSize: '14px' }}>
+          <div>{new Date(record.period_start).toLocaleDateString()}</div>
+          <div style={{ color: '#6b7280' }}>
+            to {new Date(record.period_end).toLocaleDateString()}
+          </div>
+        </div>
+      ),
     },
     {
       title: 'Payment Date',
       dataIndex: 'payment_date',
       key: 'payment_date',
+      render: (date: string) => (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <CalendarOutlined style={{ color: '#9ca3af' }} />
+          <span>{new Date(date).toLocaleDateString()}</span>
+        </div>
+      ),
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: (status: string) => (
-        <span style={{ 
-          textTransform: 'capitalize',
-          color: status === 'paid' ? '#52c41a' : 
-                 status === 'approved' ? '#1890ff' : 
-                 status === 'processing' ? '#faad14' : '#f5222d'
-        }}>
-          {status.replace('_', ' ')}
-        </span>
-      ),
+      render: (status: string) => {
+        const statusMap = {
+          paid: 'paid',
+          approved: 'approved',
+          processing: 'processing',
+          draft: 'draft'
+        };
+        const statusClass = statusMap[status as keyof typeof statusMap] || 'draft';
+        const icons = {
+          paid: '✓',
+          approved: '→',
+          processing: '⟳',
+          draft: '○'
+        };
+
+        return (
+          <span className={`status-badge ${statusClass}`}>
+            <span>{icons[statusClass as keyof typeof icons]}</span>
+            <span>{status.replace('_', ' ').toUpperCase()}</span>
+          </span>
+        );
+      },
     },
   ];
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-        <Spin size="large" />
-      </div>
+      <>
+        <div className="dashboard-loading">
+          <Spin size="large" />
+          <Typography.Text className="dashboard-loading-text">
+            Loading dashboard...
+          </Typography.Text>
+        </div>
+      </>
     );
   }
 
+  const statsData = [
+    {
+      title: 'Total Employees',
+      value: employeeCount,
+      icon: <UserOutlined />,
+      color: '#1890ff',
+      trend: { value: 12, isPositive: true },
+    },
+    {
+      title: 'Active Payrolls',
+      value: recentPayrolls.filter(p => p.status === 'processing').length,
+      icon: <CreditCardOutlined />,
+      color: '#faad14',
+      trend: { value: 5, isPositive: false },
+    },
+    {
+      title: 'Monthly Expense',
+      value: '₹12.5L',
+      icon: <DollarOutlined />,
+      color: '#52c41a',
+      trend: { value: 8, isPositive: true },
+    },
+    {
+      title: 'Upcoming Payments',
+      value: 3,
+      icon: <CalendarOutlined />,
+      color: '#13c2c2',
+    },
+  ];
+
   return (
-    <div>
-      <TitleComponent level={2}>Dashboard</TitleComponent>
-      
-      {/* Stats Cards */}
-      <Row gutter={[16, 16]} style={{ marginBottom: '24px' }}>
-        <Col xs={24} sm={12} lg={6}>
-          <Card>
-            <Statistic
-              title="Total Employees"
-              value={employeeCount}
-              prefix={<TeamOutlined />}
-            />
-          </Card>
-        </Col>
-        <Col xs={24} sm={12} lg={6}>
-          <Card>
-            <Statistic
-              title="Active Payrolls"
-              value={recentPayrolls.filter(p => p.status === 'processing').length}
-              prefix={<CreditCardOutlined />}
-            />
-          </Card>
-        </Col>
-        <Col xs={24} sm={12} lg={6}>
-          <Card>
-            <Statistic
-              title="Salary Structures"
-              value={5} // Mock data
-              prefix={<BankOutlined />}
-            />
-          </Card>
-        </Col>
-        <Col xs={24} sm={12} lg={6}>
-          <Card>
-            <Statistic
-              title="Upcoming Payments"
-              value={3} // Mock data
-              prefix={<CalendarOutlined />}
-            />
-          </Card>
-        </Col>
-      </Row>
-      
-      {/* Charts */}
-      <Row gutter={[16, 16]} style={{ marginBottom: '24px' }}>
-        <Col xs={24} lg={12}>
-          <Card title="Department Distribution">
-            {Object.keys(departmentData).length > 0 ? (
-              <Pie data={departmentData} />
-            ) : (
-              <Empty description="No department data available" />
-            )}
-          </Card>
-        </Col>
-        <Col xs={24} lg={12}>
-          <Card title="Salary Distribution">
-            {Object.keys(salaryData).length > 0 ? (
-              <Bar 
-                data={salaryData} 
-                options={{
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      position: 'top' as const,
-                    },
-                    title: {
-                      display: false,
-                    },
-                  },
-                }}
-              />
-            ) : (
-              <Empty description="No salary data available" />
-            )}
-          </Card>
-        </Col>
-      </Row>
-      
-      {/* Tables */}
-      <Row gutter={[16, 16]}>
-        <Col xs={24} lg={12}>
-          <Card title="Recent Employees" style={{ marginBottom: '24px' }}>
-            <Table 
-              dataSource={recentEmployees} 
-              columns={employeeColumns} 
-              rowKey="id"
-              pagination={false}
-              size="small"
-            />
-          </Card>
-        </Col>
-        <Col xs={24} lg={12}>
-          <Card title="Recent Payrolls" style={{ marginBottom: '24px' }}>
-            <Table 
-              dataSource={recentPayrolls} 
-              columns={payrollColumns} 
-              rowKey="id"
-              pagination={false}
-              size="small"
-            />
-          </Card>
-        </Col>
-      </Row>
-    </div>
+    <>
+      <div className="dashboard-container">
+        {/* Header */}
+        <div className="dashboard-header">
+          <div className="dashboard-header-content">
+            <TitleComponent level={2}>Dashboard Overview</TitleComponent>
+            <Typography.Text className="dashboard-header-subtitle">
+              Welcome back! Here's what's happening with your organization.
+            </Typography.Text>
+          </div>
+          <div className="dashboard-last-updated">
+            <DashboardOutlined style={{ color: '#10b981' }} />
+            <span>Last updated: {new Date().toLocaleTimeString()}</span>
+          </div>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="dashboard-stats-grid">
+          <Row className="dashboard-stats-row" gutter={0}>
+            {statsData.map((stat, index) => (
+              <Col xs={24} sm={12} lg={6} key={index} className="dashboard-stats-col">
+                <div className="dashboard-stat-card">
+                  <div className="dashboard-stat-content">
+                    <div className="dashboard-stat-info">
+                      <div className="dashboard-stat-title">{stat.title}</div>
+                      <div className="dashboard-stat-value">{stat.value}</div>
+                      {stat.trend && (
+                        <div className={`dashboard-stat-trend ${stat.trend.isPositive ? 'positive' : 'negative'}`}>
+                          {stat.trend.isPositive ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+                          {stat.trend.value}%
+                        </div>
+                      )}
+                    </div>
+                    <div className="dashboard-stat-icon" style={{ background: stat.color }}>
+                      {stat.icon}
+                    </div>
+                  </div>
+                </div>
+              </Col>
+            ))}
+          </Row>
+        </div>
+
+        {/* Charts Section */}
+        <div className="dashboard-charts-section">
+          <Row className="dashboard-charts-row" gutter={0}>
+            <Col xs={24} lg={12} className="dashboard-charts-col">
+              <div className="dashboard-chart-card">
+                <div className="dashboard-chart-header">
+                  <div className="dashboard-chart-title">
+                    <PieChartOutlined style={{ color: '#3b82f6' }} />
+                    <span>Department Distribution</span>
+                  </div>
+                </div>
+                <div className="dashboard-chart-content">
+                  {Object.keys(departmentData).length > 0 ? (
+                    <Pie
+                      data={departmentData}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: {
+                            position: 'bottom' as const,
+                            labels: {
+                              padding: 20,
+                              usePointStyle: true,
+                            }
+                          },
+                        },
+                      }}
+                    />
+                  ) : (
+                    <Empty description="No department data available" />
+                  )}
+                </div>
+              </div>
+            </Col>
+            <Col xs={24} lg={12} className="dashboard-charts-col">
+              <div className="dashboard-chart-card">
+                <div className="dashboard-chart-header">
+                  <div className="dashboard-chart-title">
+                    <RiseOutlined style={{ color: '#10b981' }} />
+                    <span>Salary Distribution</span>
+                  </div>
+                </div>
+                <div className="dashboard-chart-content">
+                  {Object.keys(salaryData).length > 0 ? (
+                    <Bar
+                      data={salaryData}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: {
+                            display: false,
+                          },
+                        },
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                            grid: {
+                              color: 'rgba(0, 0, 0, 0.05)',
+                            },
+                          },
+                          x: {
+                            grid: {
+                              display: false,
+                            },
+                          },
+                        },
+                      }}
+                    />
+                  ) : (
+                    <Empty description="No salary data available" />
+                  )}
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
+
+        {/* Tables Section */}
+       <div className="dashboard-tables-section">
+  <Row className="dashboard-tables-row" gutter={0}>
+    {/* Recent Employees Table - always on top */}
+    <Col xs={24} className="dashboard-tables-col">
+      <div className="dashboard-table-card">
+        <div className="dashboard-table-header">
+          <div className="dashboard-table-title">
+            <UserOutlined style={{ color: '#3b82f6' }} />
+            <span>Recent Employees</span>
+          </div>
+          <Typography.Text className="dashboard-table-count">
+            {recentEmployees.length} employees
+          </Typography.Text>
+        </div>
+        <div className="dashboard-table-content">
+          <Table
+            className="dashboard-table"
+            dataSource={recentEmployees}
+            columns={employeeColumns}
+            rowKey="id"
+            pagination={false}
+            size="small"
+          />
+        </div>
+      </div>
+    </Col>
+
+    {/* Recent Payrolls Table - always below */}
+    <Col xs={24} className="dashboard-tables-col">
+      <div className="dashboard-table-card">
+        <div className="dashboard-table-header">
+          <div className="dashboard-table-title">
+            <CreditCardOutlined style={{ color: '#10b981' }} />
+            <span>Recent Payrolls</span>
+          </div>
+          <Typography.Text className="dashboard-table-count">
+            {recentPayrolls.length} periods
+          </Typography.Text>
+        </div>
+        <div className="dashboard-table-content">
+          <Table
+            className="dashboard-table"
+            dataSource={recentPayrolls}
+            columns={payrollColumns}
+            rowKey="id"
+            pagination={false}
+            size="small"
+          />
+        </div>
+      </div>
+    </Col>
+  </Row>
+</div>
+
+      </div>
+    </>
   );
 };
 

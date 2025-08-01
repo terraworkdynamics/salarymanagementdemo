@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { 
-  Card, 
-  Tabs, 
-  Button, 
-  Space, 
-  Typography, 
-  Form, 
-  Select, 
-  DatePicker, 
-  Table, 
+import {
+  Card,
+  Tabs,
+  Button,
+  Space,
+  Typography,
+  Form,
+  Select,
+  DatePicker,
+  Table,
   Divider,
   Row,
   Col,
   Statistic,
   Empty
 } from 'antd';
-import { 
-  DownloadOutlined, 
-  FileExcelOutlined, 
+import {
+  DownloadOutlined,
+  FileExcelOutlined,
   FilePdfOutlined,
   BarChartOutlined,
   PieChartOutlined,
@@ -38,6 +38,8 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js';
+
+import './ReportsPage.css';
 
 // Register ChartJS components
 ChartJS.register(
@@ -80,12 +82,15 @@ const ReportsPage: React.FC = () => {
   };
 
   const monthlySalaryData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    labels: [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ],
     datasets: [
       {
         label: 'Total Salary Expense',
         data: [
-          1250000, 1275000, 1300000, 1350000, 1400000, 1450000, 
+          1250000, 1275000, 1300000, 1350000, 1400000, 1450000,
           1500000, 1550000, 1600000, 1650000, 1700000, 1750000
         ],
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -189,8 +194,6 @@ const ReportsPage: React.FC = () => {
     try {
       const values = await payrollForm.validateFields();
       setLoading(true);
-      
-      // In a real app, you would call an API to generate the report
       setTimeout(() => {
         setReportData({
           type: 'payroll',
@@ -207,8 +210,6 @@ const ReportsPage: React.FC = () => {
     try {
       const values = await employeeForm.validateFields();
       setLoading(true);
-      
-      // In a real app, you would call an API to generate the report
       setTimeout(() => {
         setReportData({
           type: 'employee',
@@ -225,8 +226,6 @@ const ReportsPage: React.FC = () => {
     try {
       const values = await taxForm.validateFields();
       setLoading(true);
-      
-      // In a real app, you would call an API to generate the report
       setTimeout(() => {
         setReportData({
           type: 'tax',
@@ -240,47 +239,49 @@ const ReportsPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <TitleComponent level={2}>Reports & Analytics</TitleComponent>
-      
+    <div className="reports-root">
+      <TitleComponent level={2} className="reports-title">
+        Reports & Analytics
+      </TitleComponent>
+
       <div style={{ marginBottom: 24 }}>
         <Card>
-          <Row gutter={[16, 16]}>
+          <Row gutter={[16, 16]} className="reports-statistics">
             <Col xs={24} sm={8}>
-              <Statistic 
-                title="Total Employees" 
-                value={125} 
-                prefix={<TeamOutlined />} 
+              <Statistic
+                title="Total Employees"
+                value={125}
+                prefix={<TeamOutlined />}
               />
             </Col>
             <Col xs={24} sm={8}>
-              <Statistic 
-                title="Monthly Salary Expense" 
-                value={1750000} 
-                prefix={<DollarOutlined />} 
+              <Statistic
+                title="Monthly Salary Expense"
+                value={1750000}
+                prefix={<DollarOutlined />}
                 formatter={value => `₹${value.toLocaleString()}`}
               />
             </Col>
             <Col xs={24} sm={8}>
-              <Statistic 
-                title="Average Salary" 
-                value={14000} 
-                prefix={<DollarOutlined />} 
+              <Statistic
+                title="Average Salary"
+                value={14000}
+                prefix={<DollarOutlined />}
                 formatter={value => `₹${value.toLocaleString()}`}
               />
             </Col>
           </Row>
         </Card>
       </div>
-      
+
       <Tabs activeKey={activeTab} onChange={setActiveTab}>
-        <TabPane 
+        <TabPane
           tab={
             <span>
               <BarChartOutlined />
               Payroll Reports
             </span>
-          } 
+          }
           key="1"
         >
           <Row gutter={[16, 16]}>
@@ -302,7 +303,7 @@ const ReportsPage: React.FC = () => {
                       <Option value="bank_transfer">Bank Transfer Statement</Option>
                     </Select>
                   </Form.Item>
-                  
+
                   <Form.Item
                     name="date_range"
                     label="Period"
@@ -310,7 +311,7 @@ const ReportsPage: React.FC = () => {
                   >
                     <RangePicker style={{ width: '100%' }} />
                   </Form.Item>
-                  
+
                   <Form.Item
                     name="department"
                     label="Department (Optional)"
@@ -325,11 +326,11 @@ const ReportsPage: React.FC = () => {
                       <Option value="operations">Operations</Option>
                     </Select>
                   </Form.Item>
-                  
+
                   <Form.Item>
-                    <Button 
-                      type="primary" 
-                      htmlType="submit" 
+                    <Button
+                      type="primary"
+                      htmlType="submit"
                       loading={loading}
                       block
                     >
@@ -339,10 +340,10 @@ const ReportsPage: React.FC = () => {
                 </Form>
               </Card>
             </Col>
-            
+
             <Col xs={24} lg={16}>
-              <Card 
-                title="Payroll Summary" 
+              <Card
+                title="Payroll Summary"
                 extra={
                   <Space>
                     <Button icon={<FileExcelOutlined />}>Excel</Button>
@@ -350,69 +351,75 @@ const ReportsPage: React.FC = () => {
                   </Space>
                 }
               >
-                {reportData && reportData.type === 'payroll' ? (
-                  <Table 
-                    columns={payrollSummaryColumns} 
-                    dataSource={reportData.data} 
-                    pagination={false}
-                  />
-                ) : (
-                  <Empty description="Generate a report to view data" />
-                )}
+                <div className="responsive-table-wrapper">
+                  {reportData && reportData.type === 'payroll' ? (
+                    <Table
+                      columns={payrollSummaryColumns}
+                      dataSource={reportData.data}
+                      pagination={false}
+                    />
+                  ) : (
+                    <Empty description="Generate a report to view data" />
+                  )}
+                </div>
               </Card>
             </Col>
           </Row>
-          
+
           <Divider />
-          
+
           <Row gutter={[16, 16]}>
             <Col xs={24} lg={12}>
               <Card title="Monthly Salary Expense Trend">
-                <Line 
-                  data={monthlySalaryData} 
-                  options={{
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'top' as const,
+                <div className="responsive-chart-wrapper">
+                  <Line
+                    data={monthlySalaryData}
+                    options={{
+                      responsive: true,
+                      plugins: {
+                        legend: {
+                          position: 'top' as const,
+                        },
+                        title: {
+                          display: false,
+                        },
                       },
-                      title: {
-                        display: false,
-                      },
-                    },
-                  }}
-                />
+                    }}
+                  />
+                </div>
               </Card>
             </Col>
-            
+
             <Col xs={24} lg={12}>
               <Card title="Salary Distribution by Department">
-                <Bar 
-                  data={departmentSalaryData} 
-                  options={{
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'top' as const,
+                <div className="responsive-chart-wrapper">
+                  <Bar
+                    data={departmentSalaryData}
+                    options={{
+                      responsive: true,
+                      plugins: {
+                        legend: {
+                          position: 'top' as const,
+                        },
+                        title: {
+                          display: false,
+                        },
                       },
-                      title: {
-                        display: false,
-                      },
-                    },
-                  }}
-                />
+                    }}
+                  />
+                </div>
               </Card>
             </Col>
           </Row>
         </TabPane>
-        
-        <TabPane 
+
+        <TabPane
           tab={
             <span>
               <TeamOutlined />
               Employee Reports
             </span>
-          } 
+          }
           key="2"
         >
           <Row gutter={[16, 16]}>
@@ -434,7 +441,7 @@ const ReportsPage: React.FC = () => {
                       <Option value="department">Department Report</Option>
                     </Select>
                   </Form.Item>
-                  
+
                   <Form.Item
                     name="date_range"
                     label="Period"
@@ -442,7 +449,7 @@ const ReportsPage: React.FC = () => {
                   >
                     <RangePicker style={{ width: '100%' }} />
                   </Form.Item>
-                  
+
                   <Form.Item
                     name="department"
                     label="Department (Optional)"
@@ -457,11 +464,11 @@ const ReportsPage: React.FC = () => {
                       <Option value="operations">Operations</Option>
                     </Select>
                   </Form.Item>
-                  
+
                   <Form.Item>
-                    <Button 
-                      type="primary" 
-                      htmlType="submit" 
+                    <Button
+                      type="primary"
+                      htmlType="submit"
                       loading={loading}
                       block
                     >
@@ -471,10 +478,10 @@ const ReportsPage: React.FC = () => {
                 </Form>
               </Card>
             </Col>
-            
+
             <Col xs={24} lg={16}>
-              <Card 
-                title="Employee Report" 
+              <Card
+                title="Employee Report"
                 extra={
                   <Space>
                     <Button icon={<FileExcelOutlined />}>Excel</Button>
@@ -482,73 +489,79 @@ const ReportsPage: React.FC = () => {
                   </Space>
                 }
               >
-                {reportData && reportData.type === 'employee' ? (
-                  <div>Employee report data will be displayed here</div>
-                ) : (
-                  <Empty description="Generate a report to view data" />
-                )}
+                <div className="responsive-table-wrapper">
+                  {reportData && reportData.type === 'employee' ? (
+                    <div>Employee report data will be displayed here</div>
+                  ) : (
+                    <Empty description="Generate a report to view data" />
+                  )}
+                </div>
               </Card>
             </Col>
           </Row>
         </TabPane>
-        
-        <TabPane 
+
+        <TabPane
           tab={
             <span>
               <PieChartOutlined />
               Salary Analysis
             </span>
-          } 
+          }
           key="3"
         >
           <Row gutter={[16, 16]}>
             <Col xs={24} lg={12}>
               <Card title="Salary Components Distribution">
-                <Pie 
-                  data={salaryComponentData} 
-                  options={{
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'right' as const,
+                <div className="responsive-chart-wrapper">
+                  <Pie
+                    data={salaryComponentData}
+                    options={{
+                      responsive: true,
+                      plugins: {
+                        legend: {
+                          position: 'right' as const,
+                        },
+                        title: {
+                          display: false,
+                        },
                       },
-                      title: {
-                        display: false,
-                      },
-                    },
-                  }}
-                />
+                    }}
+                  />
+                </div>
               </Card>
             </Col>
-            
+
             <Col xs={24} lg={12}>
               <Card title="Department-wise Salary Distribution">
-                <Bar 
-                  data={departmentSalaryData} 
-                  options={{
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'top' as const,
+                <div className="responsive-chart-wrapper">
+                  <Bar
+                    data={departmentSalaryData}
+                    options={{
+                      responsive: true,
+                      plugins: {
+                        legend: {
+                          position: 'top' as const,
+                        },
+                        title: {
+                          display: false,
+                        },
                       },
-                      title: {
-                        display: false,
-                      },
-                    },
-                  }}
-                />
+                    }}
+                  />
+                </div>
               </Card>
             </Col>
           </Row>
         </TabPane>
-        
-        <TabPane 
+
+        <TabPane
           tab={
             <span>
               <LineChartOutlined />
               Tax Reports
             </span>
-          } 
+          }
           key="4"
         >
           <Row gutter={[16, 16]}>
@@ -570,7 +583,7 @@ const ReportsPage: React.FC = () => {
                       <Option value="tax_projection">Tax Projection</Option>
                     </Select>
                   </Form.Item>
-                  
+
                   <Form.Item
                     name="financial_year"
                     label="Financial Year"
@@ -582,7 +595,7 @@ const ReportsPage: React.FC = () => {
                       <Option value="2021-2022">2021-2022</Option>
                     </Select>
                   </Form.Item>
-                  
+
                   <Form.Item
                     name="employee"
                     label="Employee (Optional)"
@@ -594,11 +607,11 @@ const ReportsPage: React.FC = () => {
                       <Option value="emp003">Robert Johnson</Option>
                     </Select>
                   </Form.Item>
-                  
+
                   <Form.Item>
-                    <Button 
-                      type="primary" 
-                      htmlType="submit" 
+                    <Button
+                      type="primary"
+                      htmlType="submit"
                       loading={loading}
                       block
                     >
@@ -608,10 +621,10 @@ const ReportsPage: React.FC = () => {
                 </Form>
               </Card>
             </Col>
-            
+
             <Col xs={24} lg={16}>
-              <Card 
-                title="Tax Report" 
+              <Card
+                title="Tax Report"
                 extra={
                   <Space>
                     <Button icon={<FileExcelOutlined />}>Excel</Button>
@@ -619,11 +632,13 @@ const ReportsPage: React.FC = () => {
                   </Space>
                 }
               >
-                {reportData && reportData.type === 'tax' ? (
-                  <div>Tax report data will be displayed here</div>
-                ) : (
-                  <Empty description="Generate a report to view data" />
-                )}
+                <div className="responsive-table-wrapper">
+                  {reportData && reportData.type === 'tax' ? (
+                    <div>Tax report data will be displayed here</div>
+                  ) : (
+                    <Empty description="Generate a report to view data" />
+                  )}
+                </div>
               </Card>
             </Col>
           </Row>

@@ -1,0 +1,156 @@
+/* Background and Centering */
+.login-bg-root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eaf0fd 0%, #fafcff 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-card {
+  max-width: 420px;
+  width: 100% !important;
+  border-radius: 18px !important;
+  box-shadow: 0 6px 38px 8px rgba(60, 80, 255, 0.09);
+  border: none !important;
+  background: linear-gradient(135deg, #f7f9fc 60%, #eaf1fd 100%);
+  margin: 32px 8px;
+  padding: 0 !important;
+}
+
+.login-logo {
+  height: 64px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  background: #e8edfa;
+  padding: 5px;
+  box-shadow: 0 1px 6px 2px rgba(162,182,255,0.12);
+}
+
+.login-header-title {
+  color: #2248c9 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.7px;
+  margin-bottom: 0 !important;
+}
+
+.login-header-desc {
+  color: #7a7db7 !important;
+  font-size: 1.1em;
+}
+
+/* Form */
+.ant-form-item-label > label {
+  color: #2d3780 !important;
+  font-weight: 600;
+}
+
+.ant-input-affix-wrapper, .ant-input {
+  border-radius: 10px !important;
+  font-size: 1.08em;
+  background: #f6f7fc !important;
+}
+
+.ant-input-password {
+  background: #f6f7fc !important;
+  border-radius: 10px !important;
+}
+
+.ant-input-affix-wrapper:focus, .ant-input-affix-wrapper-focused,
+.ant-input:focus {
+  border-color: #466fff !important;
+  box-shadow: 0 0 0 2px #c1d2ff44;
+}
+
+/* Login Button */
+.login-btn {
+  background: linear-gradient(94deg,#466fff 20%,#8494e5 100%);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 1px rgba(76, 110, 255, 0.14);
+  color: #fff !important;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.login-btn:hover, .login-btn:focus {
+  background: linear-gradient(265deg,#466fff 65%,#5362e1 100%);
+  color: #fff !important;
+}
+
+/* Forgot Password Button */
+.forgot-btn {
+  color: #466fff !important;
+  font-weight: 500;
+}
+
+.forgot-btn:hover, .forgot-btn:focus {
+  color: #2842e1 !important;
+  text-decoration: underline;
+}
+
+/* Ant Alert customization */
+.ant-alert-error {
+  border-radius: 10px !important;
+  font-size: 15px;
+  background: #fff6f3;
+  border: 1px solid #ffd7cc;
+  color: #e06a4e !important;
+}
+
+/* Footer (copyright) */
+.login-footer {
+  margin-top: 20px;
+  color: #abb0cd !important;
+  font-size: 1em;
+  letter-spacing: 0.3px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .ant-card {
+    margin: 12px 0 !important;
+    border-radius: 10px !important;
+    padding: 0 !important;
+  }
+  .login-logo {
+    margin-bottom: 10px;
+    height: 48px !important;
+    padding: 3px;
+  }
+  .login-header-title {
+    font-size: 1.25em !important;
+  }
+  .login-header-desc {
+    font-size: 1em;
+  }
+  .ant-input,
+  .ant-input-password,
+  .ant-input-affix-wrapper {
+    font-size: 1em !important;
+  }
+  .login-btn, .forgot-btn {
+    font-size: 1em !important;
+    height: 44px !important;
+  }
+  .ant-form {
+    margin-bottom: 0 !important;
+  }
+  .login-footer {
+    font-size: 0.98em;
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .ant-card {
+    margin: 6px 0 !important;
+    border-radius: 8px !important;
+  }
+  .ant-input,
+  .ant-input-password,
+  .ant-input-affix-wrapper {
+    font-size: 0.98em !important;
+  }
+}

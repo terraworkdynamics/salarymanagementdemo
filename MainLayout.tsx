@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { 
-  Layout, 
-  Menu, 
-  Button, 
-  Avatar, 
-  Dropdown, 
-  Breadcrumb, 
+import {
+  Layout,
+  Menu,
+  Button,
+  Avatar,
+  Dropdown,
+  Breadcrumb,
   Typography,
   theme
 } from 'antd';
@@ -25,6 +25,7 @@ import {
   LogoutOutlined
 } from '@ant-design/icons';
 import { useAuth } from './AuthContext';
+import './MainLayout.css';
 
 const { Header, Sider, Content } = Layout;
 const { Title, Text } = Typography;
@@ -51,24 +52,19 @@ const MainLayout: React.FC = () => {
   const getBreadcrumbItems = (): BreadcrumbItem[] => {
     const pathSnippets = location.pathname.split('/').filter(i => i);
     const breadcrumbItems: BreadcrumbItem[] = [];
-    
+
     let url = '';
-    
-    pathSnippets.forEach((snippet, index) => {
+    pathSnippets.forEach(snippet => {
       url += `/${snippet}`;
-      
-      // Skip 'admin' in breadcrumb
       if (snippet === 'admin') return;
-      
       // Format the breadcrumb title
       const title = snippet.charAt(0).toUpperCase() + snippet.slice(1).replace(/-/g, ' ');
-      
       breadcrumbItems.push({
         title,
         path: url,
       });
     });
-    
+
     return breadcrumbItems;
   };
 
@@ -89,10 +85,10 @@ const MainLayout: React.FC = () => {
   );
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider 
-        trigger={null} 
-        collapsible 
+    <Layout className="main-layout">
+      <Sider
+        trigger={null}
+        collapsible
         collapsed={collapsed}
         theme="light"
         style={{
@@ -100,18 +96,18 @@ const MainLayout: React.FC = () => {
           zIndex: 10
         }}
       >
-        <div className="logo" style={{ 
-          height: '64px', 
-          display: 'flex', 
-          alignItems: 'center', 
+        <div className="logo" style={{
+          height: '64px',
+          display: 'flex',
+          alignItems: 'center',
           justifyContent: collapsed ? 'center' : 'flex-start',
           padding: collapsed ? '0' : '0 16px',
           overflow: 'hidden'
         }}>
-          <img 
-            src="/logo.png" 
-            alt="Logo" 
-            style={{ height: '32px', marginRight: collapsed ? '0' : '8px' }} 
+          <img
+            src="/logo.png"
+            alt="Logo"
+            style={{ height: '32px', marginRight: collapsed ? '0' : '8px' }}
           />
           {!collapsed && (
             <Title level={5} style={{ margin: 0, whiteSpace: 'nowrap' }}>
@@ -119,13 +115,13 @@ const MainLayout: React.FC = () => {
             </Title>
           )}
         </div>
-        
+
         <Menu
           mode="inline"
           defaultSelectedKeys={['/admin/dashboard']}
           selectedKeys={[location.pathname]}
           style={{ borderRight: 0 }}
-          onClick={({ key }) => navigate(key)}
+          onClick={({ key }) => navigate(key as string)}
         >
           <Menu.Item key="/admin/dashboard" icon={<DashboardOutlined />}>
             Dashboard
@@ -153,33 +149,27 @@ const MainLayout: React.FC = () => {
           </Menu.Item>
         </Menu>
       </Sider>
-      
+
       <Layout>
-        <Header style={{ 
-          padding: '0 16px', 
-          background: token.colorBgContainer,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          boxShadow: '0 1px 4px rgba(0, 0, 0, 0.1)'
-        }}>
+        <Header className="ant-layout-header">
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
-            style={{ fontSize: '16px', width: 64, height: 64 }}
+            className="header-trigger-btn"
+            style={{ width: 64, height: 64 }}
           />
-          
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+
+          <div className="header-user-dropdown">
             <Dropdown overlay={userMenu} trigger={['click']}>
-              <div style={{ 
-                cursor: 'pointer', 
-                display: 'flex', 
-                alignItems: 'center' 
+              <div style={{
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center'
               }}>
-                <Avatar 
-                  icon={<UserOutlined />} 
-                  style={{ marginRight: 8 }} 
+                <Avatar
+                  icon={<UserOutlined />}
+                  style={{ marginRight: 8 }}
                 />
                 <Text style={{ marginRight: 8 }}>
                   {userProfile?.full_name || user?.email}
@@ -188,25 +178,18 @@ const MainLayout: React.FC = () => {
             </Dropdown>
           </div>
         </Header>
-        
-        <Content style={{ 
-          margin: '16px', 
-          padding: 24, 
-          background: token.colorBgContainer,
-          borderRadius: token.borderRadius,
-          minHeight: 280 
-        }}>
+
+        <Content className="ant-layout-content">
           <Breadcrumb style={{ marginBottom: '16px' }}>
             <Breadcrumb.Item key="home" onClick={() => navigate('/admin/dashboard')}>
               <DashboardOutlined /> Dashboard
             </Breadcrumb.Item>
-            {getBreadcrumbItems().map((item, index) => (
+            {getBreadcrumbItems().map((item) => (
               <Breadcrumb.Item key={item.path} onClick={() => navigate(item.path)}>
                 {item.title}
               </Breadcrumb.Item>
             ))}
           </Breadcrumb>
-          
           <Outlet />
         </Content>
       </Layout>

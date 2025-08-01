@@ -11,6 +11,7 @@ import EmployeesPage from './pages/EmployeesPage';
 import SalaryStructurePage from './pages/SalaryStructurePage';
 import PayrollPage from './pages/PayrollPage';
 import ReportsPage from './pages/ReportsPage';
+import ChatbotTestPage from './pages/ChatbotTestPage';
 
 // Components
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -155,6 +156,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/chatbot-test" element={<ChatbotTestPage />} />
               <Route
                 path="/dashboard"
                 element={

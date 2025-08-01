@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Bar Alignment Test</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/antd/5.12.8/reset.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            padding: 0 16px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            border-bottom: 1px solid #f0f0f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .menu-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 6px;
+            color: #6b7280;
+        }
+
+        .menu-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 10px 12px;
+            min-width: 0;
+            flex: 1;
+            max-width: 384px;
+            height: 40px;
+        }
+
+        .search-icon {
+            color: #9ca3af;
+            font-size: 16px;
+        }
+
+        .search-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 14px;
+            height: 20px;
+            line-height: 20px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            height: 64px;
+        }
+
+        .notification-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 6px;
+            color: #6b7280;
+            position: relative;
+        }
+
+        .notification-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+        }
+
+        .user-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            height: 48px;
+        }
+
+        .user-dropdown:hover {
+            background: #f9fafb;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .user-info {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f2937;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: #6b7280;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 280px;
+            background: #fff;
+            border-right: 1px solid #f0f0f0;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 24px;
+            min-height: calc(100vh - 64px);
+        }
+
+        .logo-section {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 24px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        /* Icons using Unicode symbols */
+        .icon-menu::before { content: "☰"; }
+        .icon-search::before { content: "🔍"; }
+        .icon-bell::before { content: "🔔"; }
+        .icon-user::before { content: "👤"; }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-section">
+            <div class="logo">
+                <div class="logo-img">T</div>
+                <h1 class="logo-text">TerraDigitalize</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div style="margin-left: 280px;">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <!-- Menu Button -->
+                <button class="menu-btn">
+                    <span class="icon-menu"></span>
+                </button>
+
+                <!-- Search Bar -->
+                <div class="search-bar">
+                    <span class="search-icon icon-search"></span>
+                    <input
+                        type="text"
+                        placeholder="Search employees, payrolls..."
+                        class="search-input"
+                    />
+                </div>
+            </div>
+
+            <div class="header-right">
+                <!-- Notifications -->
+                <button class="notification-btn">
+                    <span class="icon-bell"></span>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <!-- User Dropdown -->
+                <div class="user-dropdown">
+                    <div class="user-avatar">
+                        <span class="icon-user"></span>
+                    </div>
+                    <div class="user-info">
+                        <p class="user-name">Admin User</p>
+                        <p class="user-role">Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1>Navigation Bar Alignment Test</h1>
+            <p>This page demonstrates the fixed navigation bar alignment:</p>
+            <ul>
+                <li>✅ Search field is properly aligned vertically</li>
+                <li>✅ Search icon is centered within the search field</li>
+                <li>✅ Admin user profile is properly aligned</li>
+                <li>✅ Notification bell is aligned with other elements</li>
+                <li>✅ All elements have consistent height and spacing</li>
+            </ul>
+            
+            <h2 style="margin-top: 32px;">Key Improvements Made:</h2>
+            <ol>
+                <li><strong>Search Bar:</strong> Added explicit height (40px) and proper flex alignment</li>
+                <li><strong>Search Icon:</strong> Increased font-size to 16px for better visibility</li>
+                <li><strong>User Profile:</strong> Added height constraint (48px) and proper flex column layout</li>
+                <li><strong>Notification Button:</strong> Consistent sizing (40px) with proper positioning</li>
+                <li><strong>Overall Header:</strong> Ensured all elements are vertically centered with consistent spacing</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

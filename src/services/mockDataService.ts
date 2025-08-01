@@ -1,15 +1,20 @@
-import { v4 as uuidv4 } from 'uuid';
 import { Database } from '../types/database.types';
+
+// Simple UUID generator
+const generateId = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : ((r & 0x3) | 0x8);
+    return v.toString(16);
+  });
+};
 
 // Type definitions
 type Employee = Database['public']['Tables']['employees']['Row'];
 type SalaryStructure = Database['public']['Tables']['salary_structures']['Row'];
 type SalaryComponent = Database['public']['Tables']['salary_components']['Row'];
-type StructureComponent = Database['public']['Tables']['structure_components']['Row'];
-type EmployeeSalary = Database['public']['Tables']['employee_salary']['Row'];
 type PayrollPeriod = Database['public']['Tables']['payroll_periods']['Row'];
 type Payslip = Database['public']['Tables']['payslips']['Row'];
-type PayslipComponent = Database['public']['Tables']['payslip_components']['Row'];
 
 // Generate current date and some relative dates
 const now = new Date();
@@ -22,7 +27,7 @@ const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate()
 // Mock Employees Data
 export const mockEmployees: Employee[] = [
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     first_name: 'John',
@@ -51,7 +56,7 @@ export const mockEmployees: Employee[] = [
     esi_number: 'ESI12345678'
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     first_name: 'Jane',
@@ -80,7 +85,7 @@ export const mockEmployees: Employee[] = [
     esi_number: 'ESI87654321'
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     first_name: 'Raj',
@@ -109,7 +114,7 @@ export const mockEmployees: Employee[] = [
     esi_number: 'ESI34567890'
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     first_name: 'Priya',
@@ -138,7 +143,7 @@ export const mockEmployees: Employee[] = [
     esi_number: 'ESI45678901'
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     first_name: 'Amit',
@@ -167,7 +172,7 @@ export const mockEmployees: Employee[] = [
     esi_number: 'ESI56789012'
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     first_name: 'Neha',
@@ -200,7 +205,7 @@ export const mockEmployees: Employee[] = [
 // Mock Salary Structures
 export const mockSalaryStructures: SalaryStructure[] = [
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     name: 'Standard Structure',
@@ -208,7 +213,7 @@ export const mockSalaryStructures: SalaryStructure[] = [
     is_active: true
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     name: 'Executive Structure',
@@ -216,7 +221,7 @@ export const mockSalaryStructures: SalaryStructure[] = [
     is_active: true
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     name: 'Intern Structure',
@@ -228,7 +233,7 @@ export const mockSalaryStructures: SalaryStructure[] = [
 // Mock Salary Components
 export const mockSalaryComponents: SalaryComponent[] = [
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     name: 'Basic Salary',
@@ -241,7 +246,7 @@ export const mockSalaryComponents: SalaryComponent[] = [
     is_active: true
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     name: 'House Rent Allowance',
@@ -254,7 +259,7 @@ export const mockSalaryComponents: SalaryComponent[] = [
     is_active: true
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     name: 'Conveyance Allowance',
@@ -267,7 +272,7 @@ export const mockSalaryComponents: SalaryComponent[] = [
     is_active: true
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     name: 'Medical Allowance',
@@ -280,7 +285,7 @@ export const mockSalaryComponents: SalaryComponent[] = [
     is_active: true
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     name: 'Special Allowance',
@@ -293,7 +298,7 @@ export const mockSalaryComponents: SalaryComponent[] = [
     is_active: true
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     name: 'Provident Fund',
@@ -306,7 +311,7 @@ export const mockSalaryComponents: SalaryComponent[] = [
     is_active: true
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     name: 'Professional Tax',
@@ -319,7 +324,7 @@ export const mockSalaryComponents: SalaryComponent[] = [
     is_active: true
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneYearAgo,
     updated_at: currentDate,
     name: 'Income Tax',
@@ -336,7 +341,7 @@ export const mockSalaryComponents: SalaryComponent[] = [
 // Mock Payroll Periods
 export const mockPayrollPeriods: PayrollPeriod[] = [
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: threeMonthsAgo,
     updated_at: threeMonthsAgo,
     period_name: 'April 2023',
@@ -346,7 +351,7 @@ export const mockPayrollPeriods: PayrollPeriod[] = [
     status: 'paid'
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: twoMonthsAgo,
     updated_at: twoMonthsAgo,
     period_name: 'May 2023',
@@ -356,7 +361,7 @@ export const mockPayrollPeriods: PayrollPeriod[] = [
     status: 'paid'
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: oneMonthAgo,
     updated_at: oneMonthAgo,
     period_name: 'June 2023',
@@ -366,7 +371,7 @@ export const mockPayrollPeriods: PayrollPeriod[] = [
     status: 'approved'
   },
   {
-    id: uuidv4(),
+    id: generateId(),
     created_at: currentDate,
     updated_at: currentDate,
     period_name: 'July 2023',
@@ -421,7 +426,7 @@ export const generateMockPayslips = (): Payslip[] => {
       
       // Create payslip
       payslips.push({
-        id: uuidv4(),
+        id: generateId(),
         created_at: period.created_at,
         updated_at: period.updated_at,
         employee_id: employee.id,
@@ -500,7 +505,7 @@ export const mockApi = {
   
   createEmployee: async (employeeData: any) => {
     const newEmployee = {
-      id: uuidv4(),
+      id: generateId(),
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       ...employeeData

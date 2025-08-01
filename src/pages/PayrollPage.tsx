@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import type { ColumnsType } from 'antd/es/table';
 import { Key } from 'react';
-import { 
-  Table, 
-  Button, 
-  Space, 
-  Typography, 
-  Card, 
-  Steps, 
-  Modal, 
-  Form, 
-  DatePicker, 
-  Input, 
-  Select, 
+import {
+  Table,
+  Button,
+  Space,
+  Typography,
+  Card,
+  Steps,
+  Modal,
+  Form,
+  DatePicker,
+  Input,
+  Select,
   message,
   Popconfirm,
   Tag,
@@ -20,12 +20,12 @@ import {
   Statistic,
   Row,
   Col,
-  Tooltip
+  Tooltip,
 } from 'antd';
-import { 
-  PlusOutlined, 
-  EditOutlined, 
-  DeleteOutlined, 
+import {
+  PlusOutlined,
+  EditOutlined,
+  DeleteOutlined,
   CheckCircleOutlined,
   CloseCircleOutlined,
   DownloadOutlined,
@@ -33,10 +33,12 @@ import {
   FileExcelOutlined,
   MailOutlined,
   CalendarOutlined,
-  DollarOutlined
+  DollarOutlined,
 } from '@ant-design/icons';
 import { fetchPayrollPeriods, fetchPayslips } from '../lib/supabase-client';
 import { Database } from '../types/database.types';
+
+import './payroll-page.css'; // <-- Import your CSS here
 
 const { Title, Text } = Typography;
 const { Step } = Steps;
@@ -95,10 +97,10 @@ const PayrollPage: React.FC = () => {
   const handlePayrollSubmit = async () => {
     try {
       const values = await payrollForm.validateFields();
-      
+
       // In a real app, you would call an API to create the payroll period
       message.success('Payroll period created successfully');
-      
+
       setPayrollModalVisible(false);
       loadPayrollPeriods();
     } catch (error) {
@@ -129,148 +131,158 @@ const PayrollPage: React.FC = () => {
 
   const getStepStatus = (period: PayrollPeriod, step: number) => {
     const statusMap = {
-      'draft': 0,
-      'processing': 1,
-      'approved': 2,
-      'paid': 3
+      draft: 0,
+      processing: 1,
+      approved: 2,
+      paid: 3,
     };
-    
     const currentStep = statusMap[period.status];
-    
     if (step < currentStep) return 'finish';
     if (step === currentStep) return 'process';
     return 'wait';
   };
 
-const payrollColumns: ColumnsType<PayrollPeriod> = [
-  {
-    title: 'Period',
-    dataIndex: 'period_name',
-    key: 'period_name',
-    sorter: (a, b) => a.period_name.localeCompare(b.period_name),
-  },
-  {
-    title: 'Start Date',
-    dataIndex: 'period_start',
-    key: 'period_start',
-    render: (_, record) => new Date(record.period_start).toLocaleDateString(),
-  },
-  {
-    title: 'End Date',
-    dataIndex: 'period_end',
-    key: 'period_end',
-    render: (_, record) => new Date(record.period_end).toLocaleDateString(),
-  },
-  {
-    title: 'Payment Date',
-    dataIndex: 'payment_date',
-    key: 'payment_date',
-    render: (_, record) => new Date(record.payment_date).toLocaleDateString(),
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-    render: (status: string) => {
-      let color = 'default';
-      if (status === 'processing') color = 'blue';
-      else if (status === 'approved') color = 'green';
-      else if (status === 'paid') color = 'purple';
-
-      return <Tag color={color}>{status.toUpperCase()}</Tag>;
+  const payrollColumns: ColumnsType<PayrollPeriod> = [
+    {
+      title: 'Period',
+      dataIndex: 'period_name',
+      key: 'period_name',
+      sorter: (a, b) => a.period_name.localeCompare(b.period_name),
     },
-    filters: [
-      { text: 'Draft', value: 'draft' },
-      { text: 'Processing', value: 'processing' },
-      { text: 'Approved', value: 'approved' },
-      { text: 'Paid', value: 'paid' },
-    ],
-    onFilter: (value: boolean | Key, record) => record.status === value.toString(),
-  },
-  {
-    title: 'Progress',
-    key: 'progress',
-    render: (_, record) => (
-      <Steps size="small" current={
-        record.status === 'draft' ? 0 :
-        record.status === 'processing' ? 1 :
-        record.status === 'approved' ? 2 : 3
-      }>
-        <Step title="Draft" status={getStepStatus(record, 0)} />
-        <Step title="Processing" status={getStepStatus(record, 1)} />
-        <Step title="Approved" status={getStepStatus(record, 2)} />
-        <Step title="Paid" status={getStepStatus(record, 3)} />
-      </Steps>
-    ),
-  },
-  {
-    title: 'Actions',
-    key: 'actions',
-    render: (_, record) => (
-      <Space size="small">
-        <Button 
-          type="primary" 
-          size="small" 
-          onClick={() => handleViewPayslips(record)}
+    {
+      title: 'Start Date',
+      dataIndex: 'period_start',
+      key: 'period_start',
+      render: (_, record) => new Date(record.period_start).toLocaleDateString(),
+    },
+    {
+      title: 'End Date',
+      dataIndex: 'period_end',
+      key: 'period_end',
+      render: (_, record) => new Date(record.period_end).toLocaleDateString(),
+    },
+    {
+      title: 'Payment Date',
+      dataIndex: 'payment_date',
+      key: 'payment_date',
+      render: (_, record) => new Date(record.payment_date).toLocaleDateString(),
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (status: string) => {
+        let color = 'default';
+        if (status === 'processing') color = 'blue';
+        else if (status === 'approved') color = 'green';
+        else if (status === 'paid') color = 'purple';
+
+        return <Tag color={color}>{status.toUpperCase()}</Tag>;
+      },
+      filters: [
+        { text: 'Draft', value: 'draft' },
+        { text: 'Processing', value: 'processing' },
+        { text: 'Approved', value: 'approved' },
+        { text: 'Paid', value: 'paid' },
+      ],
+      onFilter: (value: boolean | Key, record) => record.status === value.toString(),
+    },
+    {
+      title: 'Progress',
+      key: 'progress',
+      render: (_, record) => (
+        <Steps
+          size="small"
+          current={
+            record.status === 'draft'
+              ? 0
+              : record.status === 'processing'
+              ? 1
+              : record.status === 'approved'
+              ? 2
+              : 3
+          }
         >
-          View Payslips
-        </Button>
-
-        {record.status === 'draft' && (
-          <Button 
-            type="default" 
-            size="small" 
-            onClick={() => handleRunPayroll(record)}
+          <Step title="Draft" status={getStepStatus(record, 0)} />
+          <Step title="Processing" status={getStepStatus(record, 1)} />
+          <Step title="Approved" status={getStepStatus(record, 2)} />
+          <Step title="Paid" status={getStepStatus(record, 3)} />
+        </Steps>
+      ),
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_, record) => (
+        <Space size="small">
+          <Button
+            type="primary"
+            size="small"
+            className="payroll-action-button"
+            onClick={() => handleViewPayslips(record)}
           >
-            Run Payroll
+            View Payslips
           </Button>
-        )}
 
-        {record.status === 'processing' && (
-          <Button 
-            type="default" 
-            size="small" 
-            onClick={() => handleApprovePayroll(record)}
-          >
-            Approve
-          </Button>
-        )}
-
-        {record.status === 'approved' && (
-          <Button 
-            type="default" 
-            size="small" 
-            onClick={() => handlePayPayroll(record)}
-          >
-            Mark as Paid
-          </Button>
-        )}
-
-        {record.status === 'draft' && (
-          <Popconfirm
-            title="Are you sure you want to delete this payroll period?"
-            onConfirm={() => message.success('Payroll period deleted')}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button 
-              type="text" 
-              danger 
+          {record.status === 'draft' && (
+            <Button
+              type="default"
               size="small"
-              icon={<DeleteOutlined />} 
-            />
-          </Popconfirm>
-        )}
-      </Space>
-    ),
-  },
-];
+              className="payroll-action-button"
+              onClick={() => handleRunPayroll(record)}
+            >
+              Run Payroll
+            </Button>
+          )}
+
+          {record.status === 'processing' && (
+            <Button
+              type="default"
+              size="small"
+              className="payroll-action-button"
+              onClick={() => handleApprovePayroll(record)}
+            >
+              Approve
+            </Button>
+          )}
+
+          {record.status === 'approved' && (
+            <Button
+              type="default"
+              size="small"
+              className="payroll-action-button"
+              onClick={() => handlePayPayroll(record)}
+            >
+              Mark as Paid
+            </Button>
+          )}
+
+          {record.status === 'draft' && (
+            <Popconfirm
+              title="Are you sure you want to delete this payroll period?"
+              onConfirm={() => message.success('Payroll period deleted')}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button
+                type="text"
+                danger
+                size="small"
+                icon={<DeleteOutlined />}
+                className="payroll-action-button"
+              />
+            </Popconfirm>
+          )}
+        </Space>
+      ),
+    },
+  ];
 
   const payslipColumns = [
     {
       title: 'Employee',
       key: 'employee',
-      render: (text: string, record: any) => 
+      render: (text: string, record: any) =>
         `${record.employees?.first_name || ''} ${record.employees?.last_name || ''}`,
     },
     {
@@ -306,9 +318,7 @@ const payrollColumns: ColumnsType<PayrollPeriod> = [
       dataIndex: 'payment_status',
       key: 'payment_status',
       render: (status: string) => (
-        <Tag color={status === 'paid' ? 'green' : 'orange'}>
-          {status.toUpperCase()}
-        </Tag>
+        <Tag color={status === 'paid' ? 'green' : 'orange'}>{status.toUpperCase()}</Tag>
       ),
     },
     {
@@ -317,17 +327,19 @@ const payrollColumns: ColumnsType<PayrollPeriod> = [
       render: (text: string, record: Payslip) => (
         <Space size="small">
           <Tooltip title="Download PDF">
-            <Button 
-              type="text" 
-              icon={<FilePdfOutlined />} 
-              onClick={() => message.success('Downloading PDF...')} 
+            <Button
+              type="text"
+              icon={<FilePdfOutlined />}
+              onClick={() => message.success('Downloading PDF...')}
+              className="payroll-action-button"
             />
           </Tooltip>
           <Tooltip title="Send Email">
-            <Button 
-              type="text" 
-              icon={<MailOutlined />} 
-              onClick={() => message.success('Email sent!')} 
+            <Button
+              type="text"
+              icon={<MailOutlined />}
+              onClick={() => message.success('Email sent!')}
+              className="payroll-action-button"
             />
           </Tooltip>
         </Space>
@@ -336,86 +348,125 @@ const payrollColumns: ColumnsType<PayrollPeriod> = [
   ];
 
   return (
-    <div>
-      <Title level={2}>Payroll Management</Title>
-      
+    <div className="payroll-container">
+      <Title level={2} className="payroll-title">
+        Payroll Management
+      </Title>
+
       <div style={{ marginBottom: 24 }}>
         <Card>
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={8}>
-              <Statistic 
-                title="Total Payroll Periods" 
-                value={payrollPeriods.length} 
-                prefix={<CalendarOutlined />} 
+              <Statistic
+                title="Total Payroll Periods"
+                value={payrollPeriods.length}
+                prefix={<CalendarOutlined />}
               />
             </Col>
             <Col xs={24} sm={8}>
-              <Statistic 
-                title="Pending Payments" 
-                value={payrollPeriods.filter(p => p.status === 'approved').length} 
-                prefix={<DollarOutlined />} 
+              <Statistic
+                title="Pending Payments"
+                value={payrollPeriods.filter((p) => p.status === 'approved').length}
+                prefix={<DollarOutlined />}
               />
             </Col>
             <Col xs={24} sm={8}>
-              <Statistic 
-                title="Completed Payments" 
-                value={payrollPeriods.filter(p => p.status === 'paid').length} 
-                prefix={<CheckCircleOutlined />} 
+              <Statistic
+                title="Completed Payments"
+                value={payrollPeriods.filter((p) => p.status === 'paid').length}
+                prefix={<CheckCircleOutlined />}
                 valueStyle={{ color: '#3f8600' }}
               />
             </Col>
           </Row>
         </Card>
       </div>
-      
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-        <Title level={4}>Payroll Periods</Title>
-        <Button 
-          type="primary" 
-          icon={<PlusOutlined />} 
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginBottom: 16,
+          flexWrap: 'wrap',
+          rowGap: 10,
+        }}
+      >
+        <Title level={4} style={{ marginBottom: 0 }}>
+          Payroll Periods
+        </Title>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
           onClick={showAddPayrollModal}
+          className="payroll-action-button"
         >
           Create Payroll Period
         </Button>
       </div>
-      
-      <Table 
-        columns={payrollColumns} 
-        dataSource={payrollPeriods} 
-        rowKey="id"
-        loading={loading}
-      />
-      
+
+      <div className="payroll-table-wrapper">
+        <Table
+          columns={payrollColumns}
+          dataSource={payrollPeriods}
+          rowKey="id"
+          loading={loading}
+          scroll={{ x: 'max-content' }}
+          style={{
+            background: '#fff',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+          }}
+        />
+      </div>
+
       {selectedPeriod && (
         <>
           <Divider />
-          
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-            <Title level={4}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: 16,
+              flexWrap: 'wrap',
+              rowGap: 10,
+            }}
+          >
+            <Title level={4} style={{ marginBottom: 0 }}>
               Payslips for {selectedPeriod.period_name}
             </Title>
             <Space>
-              <Button 
+              <Button
                 icon={<FileExcelOutlined />}
                 onClick={() => message.success('Exporting to Excel...')}
+                className="payroll-action-button"
               >
                 Export to Excel
               </Button>
-              <Button 
+              <Button
                 icon={<MailOutlined />}
                 onClick={() => message.success('Sending emails...')}
+                className="payroll-action-button"
               >
                 Email All Payslips
               </Button>
             </Space>
           </div>
-          
-          <Table 
-            columns={payslipColumns} 
-            dataSource={payslips} 
-            rowKey="id"
-            loading={loading}
-          />
+          <div className="payslip-table-wrapper">
+            <Table
+              columns={payslipColumns}
+              dataSource={payslips}
+              rowKey="id"
+              loading={loading}
+              scroll={{ x: 'max-content' }}
+              style={{
+                background: '#fff',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              }}
+            />
+          </div>
         </>
       )}
 
@@ -427,10 +478,7 @@ const payrollColumns: ColumnsType<PayrollPeriod> = [
         onCancel={handlePayrollCancel}
         width={600}
       >
-        <Form
-          form={payrollForm}
-          layout="vertical"
-        >
+        <Form form={payrollForm} layout="vertical">
           <Form.Item
             name="period_name"
             label="Period Name"
