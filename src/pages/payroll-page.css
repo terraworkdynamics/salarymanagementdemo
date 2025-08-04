@@ -4,6 +4,7 @@ body {
   background: #f6f9fc;
   min-height: 100vh;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  color: black;
 }
 
 /* Page container */
@@ -17,7 +18,7 @@ body {
 /* Title styles */
 .payroll-title {
   margin-bottom: 16px !important;
-  color: #185adb !important;
+  color: black !important;
   text-align: center;
   font-weight: 800;
   letter-spacing: 1px;
@@ -34,9 +35,10 @@ body {
 .ant-statistic-content {
   font-size: 1.8rem !important;
   font-weight: 700 !important;
+  color: black !important;
 }
 .ant-statistic-title {
-  color: #888 !important;
+  color: black !important;
   font-size: 1rem;
 }
 
@@ -57,6 +59,7 @@ body {
 .ant-table {
   min-width: 900px !important;
   background: transparent !important;
+  color: black !important;
 }
 @media (max-width: 799px) {
   .ant-table {
@@ -71,11 +74,12 @@ body {
 
 .ant-steps-item-title {
   font-size: 0.94rem;
+  color: black !important;
 }
 
 .ant-steps-item-process .ant-steps-item-icon {
-  background: #185adb !important;
-  border-color: #185adb !important;
+  background: #cfdbf3 !important;
+  border-color: #dae3f7 !important;
 }
 
 .ant-steps-item-finish .ant-steps-item-icon {
@@ -89,30 +93,31 @@ body {
   letter-spacing: .5px;
   border-radius: 7px !important;
   padding: 3px 12px !important;
+  color: black !important;
 }
 .ant-tag-green, .ant-tag-success {
   background: #e9ffe6 !important;
-  color: #53b835 !important;
+  color: black !important;
 }
 .ant-tag-purple {
   background: #edeaff !important;
-  color: #8d6ee6 !important;
+  color: black !important;
 }
 
 .ant-tag-blue {
   background: #e0f1ff !important;
-  color: #1283d3 !important;
+  color: black !important;
 }
 
 .ant-tag-orange {
   background: #fff5e6 !important;
-  color: #e99300 !important;
+  color: black !important;
 }
 
 /* Section Titles (H4) */
 .ant-typography[h4] {
   margin-bottom: 8px !important;
-  color: #222882;
+  color: black !important;
   font-weight: 700;
   letter-spacing: 0.5px;
 }
@@ -133,21 +138,22 @@ body {
   transition: background .15s;
 }
 .payroll-action-button.ant-btn-primary {
-  background: linear-gradient(90deg,#185adb 70%,#3787ec);
+  background: linear-gradient(90deg,#6c757d 70%,#8e9aaf);
+  color: white !important;
 }
 .payroll-action-button.ant-btn-primary:hover  {
-  background: linear-gradient(90deg,#3787ec 80%,#185adb);
+  background: linear-gradient(90deg,#8e9aaf 80%,#6c757d);
 }
 
 .payroll-action-button.ant-btn-default, .ant-btn-default {
   background: #f6faff !important;
-  color: #222 !important;
+  color: black !important;
   border: 1px solid #dbefff !important;
 }
 
 .payroll-action-button.ant-btn-dangerous {
   background: #ffdddd !important;
-  color: #b82828 !important;
+  color: black !important;
 }
 
 /* Modal Styling */
@@ -155,28 +161,56 @@ body {
   border-radius: 10px !important;
   background: #fafdff !important;
   box-shadow: 0 8px 32px rgba(24,90,219,0.12) !important;
+  color: black !important;
 }
 
 .ant-modal-title {
-  color: #222882 !important;
+  color: black !important;
   font-weight: 700 !important;
 }
 
 /* Form appearance */
 .ant-form-item-label > label {
   font-size: 1rem !important;
-  color: #21408a;
+  color: black !important;
   font-weight: 600;
 }
 
 .ant-input, .ant-picker, .ant-select-selector {
   border-radius: 6px !important;
   font-size: 0.96rem !important;
+  color: black !important;
 }
 
 .ant-input:focus, .ant-picker-focused {
   border-color: #3787ec !important;
   box-shadow: 0 0 2px #3787ec;
+}
+
+/* Hover effects with light yellow */
+.ant-card:hover {
+  background: #fffef7 !important;
+  transition: background-color 0.3s ease;
+}
+
+.ant-table tbody tr:hover {
+  background: #fffef7 !important;
+}
+
+.payroll-table-wrapper:hover,
+.payslip-table-section:hover {
+  background: #fffef7 !important;
+  transition: background-color 0.3s ease;
+}
+
+.ant-tag:hover {
+  background: #fffef7 !important;
+  transition: background-color 0.3s ease;
+}
+
+.ant-steps-item:hover .ant-steps-item-title {
+  color: #8b8000 !important;
+  transition: color 0.3s ease;
 }
 
 /* Payslip Table section */
@@ -213,6 +247,7 @@ body {
   }
   .ant-table {
     font-size: 0.91rem;
+    color: black !important;
   }
 }
 

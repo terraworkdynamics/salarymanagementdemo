@@ -1,0 +1,318 @@
+.profile-settings-page {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.profile-settings-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.profile-settings-header h2 {
+  margin-bottom: 8px;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.profile-overview-card {
+  height: fit-content;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: none;
+}
+
+.profile-avatar-section {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.profile-avatar-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.profile-avatar {
+  border: 4px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.avatar-upload-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #1976d2;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.avatar-upload-btn:hover {
+  background: #1565c0;
+}
+
+.profile-name {
+  margin-bottom: 4px !important;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.profile-position {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.profile-department {
+  font-size: 14px;
+  color: #999;
+}
+
+.profile-stats {
+  margin-bottom: 24px;
+}
+
+.profile-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profile-stat:last-child {
+  border-bottom: none;
+}
+
+.profile-stat strong {
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.profile-skills,
+.profile-languages {
+  margin-bottom: 16px;
+}
+
+.profile-skills strong,
+.profile-languages strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.skills-tags,
+.languages-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.profile-form-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: none;
+}
+
+.profile-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profile-form-header h4 {
+  margin: 0;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+/* Form styling */
+.ant-form-item-label > label {
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.ant-input,
+.ant-select-selector,
+.ant-picker {
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  transition: all 0.3s ease;
+}
+
+.ant-input:focus,
+.ant-select-focused .ant-select-selector,
+.ant-picker-focused {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+}
+
+.ant-input-prefix {
+  color: #999;
+  margin-right: 8px;
+}
+
+.ant-btn {
+  border-radius: 8px;
+  font-weight: 500;
+  height: 40px;
+  padding: 0 16px;
+  transition: all 0.3s ease;
+}
+
+.ant-btn-primary {
+  background: #1976d2;
+  border-color: #1976d2;
+}
+
+.ant-btn-primary:hover {
+  background: #1565c0;
+  border-color: #1565c0;
+}
+
+.ant-switch {
+  background: #d9d9d9;
+}
+
+.ant-switch-checked {
+  background: #1976d2;
+}
+
+.ant-tag {
+  border-radius: 6px;
+  font-weight: 500;
+  padding: 4px 8px;
+}
+
+.ant-divider {
+  margin: 24px 0;
+  border-color: #f0f0f0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .profile-settings-page {
+    padding: 16px;
+  }
+  
+  .profile-form-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .profile-stats {
+    margin-bottom: 16px;
+  }
+  
+  .profile-stat {
+    padding: 8px 0;
+  }
+  
+  .skills-tags,
+  .languages-tags {
+    gap: 4px;
+  }
+  
+  .ant-tag {
+    font-size: 12px;
+    padding: 2px 6px;
+  }
+}
+
+/* Animation for form transitions */
+.ant-form-item {
+  transition: all 0.3s ease;
+}
+
+.ant-form-item:hover {
+  transform: translateY(-1px);
+}
+
+/* Loading state */
+.ant-btn-loading {
+  opacity: 0.7;
+}
+
+/* Disabled state styling */
+.ant-form-item-disabled .ant-input,
+.ant-form-item-disabled .ant-select-selector,
+.ant-form-item-disabled .ant-picker {
+  background: #f5f5f5;
+  color: #999;
+}
+
+/* Success message styling */
+.ant-message-success {
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  border-radius: 8px;
+}
+
+/* Error message styling */
+.ant-message-error {
+  background: #fff2f0;
+  border: 1px solid #ffccc7;
+  border-radius: 8px;
+} 
+
+/* Ensures modal and form backgrounds are white and text is black */
+.ant-modal-content, .ant-modal, .ant-form, .ant-form-item, .ant-input, .ant-select-selector {
+  background: #fff !important;
+  color: #111 !important;
+}
+
+/* Ensures any input placeholder is a visible dark gray/black */
+.ant-input::placeholder,
+input::placeholder,
+select::placeholder {
+  color: #333 !important;
+  opacity: 1;
+}
+
+/* Ensure modal header/footer also uses correct colors */
+.ant-modal-header, .ant-modal-footer {
+  background: #fff !important;
+  color: #111 !important;
+}
+
+/* Explicitly set all label and body text to black for clarity */
+.ant-form-item-label > label,
+.ant-modal-title,
+body,
+label {
+  color: #111 !important;
+}
+
+/* Fix for Ant Design Select and DatePicker components */
+.ant-select-selector,
+.ant-picker,
+.ant-select-dropdown,
+.ant-picker-dropdown {
+  background: #fff !important;
+  border-color: #d9d9d9 !important;
+  color: #111 !important;
+}
+
+/* Focus and active states */
+.ant-select-focused .ant-select-selector,
+.ant-picker-focused {
+  border-color: #1976d2 !important;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1) !important;
+}
+
+/* Option list for Selects/Dropdowns */
+.ant-select-item-option {
+  color: #111 !important;
+  background: #fff !important;
+}
+
+/* Placeholder color in selects and pickers */
+.ant-select-selection-placeholder,
+.ant-picker input::placeholder {
+  color: #999 !important;
+}

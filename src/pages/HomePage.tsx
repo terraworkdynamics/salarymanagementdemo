@@ -76,7 +76,7 @@ const HomePage: React.FC = () => {
   const { isAuthenticated } = useAuth();
 
   const handleLoginClick = () => navigate('/login');
-  const handleDashboardClick = () => navigate('/dashboard');
+  const handleDashboardClick = () => navigate('/login', { state: { from: { pathname: '/dashboard' } } });
 
   const features = [
     {
@@ -168,26 +168,15 @@ const HomePage: React.FC = () => {
           Built for modern businesses with advanced analytics, automation, and compliance features.
         </Paragraph>
         <Space size="large" style={{ flexWrap: 'wrap', justifyContent: 'center' }}>
-          {isAuthenticated ? (
-            <Button
-              type="primary"
-              size="large"
-              onClick={handleDashboardClick}
-              className={styles.ctaButton}
-            >
-              Access Dashboard
-            </Button>
-          ) : (
-            <Button
-              type="primary"
-              size="large"
-              onClick={handleLoginClick}
-              icon={<LockOutlined />}
-              className={styles.ctaButton}
-            >
-              Get Started
-            </Button>
-          )}
+          <Button
+            type="primary"
+            size="large"
+            onClick={handleDashboardClick}
+            icon={<LockOutlined />}
+            className={styles.ctaButton}
+          >
+            Access Dashboard
+          </Button>
         </Space>
       </section>
 

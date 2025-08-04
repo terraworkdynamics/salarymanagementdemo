@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Alert, Typography, Button, Card, Spin, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone, ArrowLeftOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import './LoginPage.css';
@@ -47,6 +47,18 @@ const LoginPage: React.FC = () => {
       <div style={{ width: '100%', maxWidth: '400px' }}>
         <Card className="login-card-glass">
           <div className="login-card-inner">
+            {/* Back Button */}
+            <div style={{ marginBottom: '16px' }}>
+              <Button
+                type="text"
+                icon={<ArrowLeftOutlined />}
+                onClick={() => navigate('/')}
+                className="login-back-button"
+              >
+                Back to Home
+              </Button>
+            </div>
+            
             {/* Header */}
             <div style={{ textAlign: 'center', marginBottom: '32px' }}>
               <div className="login-lock-hero">

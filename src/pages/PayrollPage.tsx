@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import dayjs from 'dayjs';
 import type { ColumnsType } from 'antd/es/table';
 import { Key } from 'react';
 import {
@@ -97,6 +98,16 @@ const PayrollPage: React.FC = () => {
   const handlePayrollSubmit = async () => {
     try {
       const values = await payrollForm.validateFields();
+
+      // Convert dayjs objects to string format for API
+      const submitData = {
+        ...values,
+        date_range: values.date_range ? [
+          values.date_range[0]?.format('YYYY-MM-DD'),
+          values.date_range[1]?.format('YYYY-MM-DD')
+        ] : null,
+        payment_date: values.payment_date ? values.payment_date.format('YYYY-MM-DD') : null,
+      };
 
       // In a real app, you would call an API to create the payroll period
       message.success('Payroll period created successfully');

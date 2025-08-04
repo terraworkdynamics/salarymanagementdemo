@@ -17,7 +17,6 @@ import {
 import { useAuth } from '../../contexts/AuthContext';
 import { Chatbot } from '../ui';
 import '../../styles/MainLayout.css';
-
 const { Header, Sider, Content } = Layout;
 
 interface MainLayoutProps {
@@ -44,7 +43,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/login');
+    navigate('/');
   };
 
   // Define menu items for the user dropdown
@@ -248,22 +247,26 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <Layout className={`main-content-area ${isMobile ? 'mobile' : (collapsed ? 'sidebar-collapsed' : 'sidebar-expanded')}`}>
         {/* Header */}
         <Header className="main-header">
-          <div className="header-left">
-            {/* Mobile Menu Button */}
-            <button
-              className="header-menu-btn mobile"
-              onClick={() => setMobileMenuOpen(true)}
-            >
-              <MenuOutlined />
-            </button>
+         <div className="header-left">
+  {/* Mobile Menu Button */}
+  {isMobile && (
+    <button
+      className="header-menu-btn mobile"
+      onClick={() => setMobileMenuOpen(true)}
+    >
+      <MenuOutlined />
+    </button>
+  )}
 
-            {/* Desktop Collapse Button */}
-            <button
-              className="header-menu-btn desktop"
-              onClick={() => setCollapsed(!collapsed)}
-            >
-              {collapsed ? <MenuOutlined /> : <CloseOutlined />}
-            </button>
+  {/* Desktop Collapse Button */}
+  {!isMobile && (
+    <button
+      className="header-menu-btn desktop"
+      onClick={() => setCollapsed(!collapsed)}
+    >
+      {collapsed ? <MenuOutlined /> : <CloseOutlined />}
+    </button>
+  )}
 
             {/* Search Bar */}
             <div className="header-search-bar">

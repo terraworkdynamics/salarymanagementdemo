@@ -1,0 +1,406 @@
+.account-settings-page {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.account-settings-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.account-settings-header h2 {
+  margin-bottom: 8px;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.account-settings-tabs .ant-tabs-nav {
+  margin-bottom: 24px;
+  background: #fff;
+  padding: 0 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.account-settings-tabs .ant-tabs-tab {
+  padding: 16px 24px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.account-settings-tabs .ant-tabs-tab-active {
+  background: #e3f2fd;
+  border-radius: 8px;
+}
+
+.account-settings-tabs .ant-tabs-tab-btn {
+  font-weight: 500;
+}
+
+.account-settings-tabs .ant-tabs-tab-btn:hover {
+  color: #1976d2;
+}
+
+.account-settings-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #1976d2;
+  font-weight: 600;
+}
+
+.account-settings-tabs .ant-tabs-ink-bar {
+  background: #1976d2;
+}
+
+.settings-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: none;
+  margin-bottom: 24px;
+}
+
+.settings-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 20px 24px;
+}
+
+.settings-card .ant-card-head-title {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 16px;
+}
+
+.settings-card .ant-card-body {
+  padding: 24px;
+}
+
+.account-stats {
+  text-align: center;
+}
+
+.account-stats .ant-statistic-title {
+  color: #666;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.account-stats .ant-statistic-content {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.account-stats .ant-progress {
+  margin: 16px 0;
+}
+
+.account-stats .ant-typography {
+  color: #999;
+  font-size: 14px;
+}
+
+.security-settings,
+.privacy-settings {
+  padding: 0;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-item .ant-typography {
+  color: #1a1a1a;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.setting-item .ant-typography-secondary {
+  color: #666;
+  font-weight: 400;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.ant-switch {
+  background: #d9d9d9;
+}
+
+.ant-switch-checked {
+  background: #1976d2;
+}
+
+.ant-tag {
+  border-radius: 6px;
+  font-weight: 500;
+  padding: 4px 8px;
+}
+
+.login-history {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.login-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  margin-bottom: 8px;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.login-item:hover {
+  background: #f5f5f5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-info {
+  flex: 1;
+}
+
+.login-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.login-status .anticon {
+  font-size: 16px;
+}
+
+.login-time {
+  text-align: right;
+}
+
+.login-time .anticon {
+  margin-right: 4px;
+}
+
+.danger-zone {
+  border: 1px solid #ffccc7;
+  background: #fff2f0;
+}
+
+.danger-zone .ant-card-head {
+  border-bottom-color: #ffccc7;
+}
+
+.danger-zone .ant-card-head-title {
+  color: #ff4d4f;
+}
+
+/* Form styling */
+.ant-form-item-label > label {
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.ant-input,
+.ant-select-selector,
+.ant-input-password {
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  transition: all 0.3s ease;
+}
+
+.ant-input:focus,
+.ant-select-focused .ant-select-selector,
+.ant-input-password:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+}
+
+.ant-input-prefix {
+  color: #999;
+  margin-right: 8px;
+}
+
+.ant-btn {
+  border-radius: 8px;
+  font-weight: 500;
+  height: 40px;
+  padding: 0 16px;
+  transition: all 0.3s ease;
+}
+
+.ant-btn-primary {
+  background: #1976d2;
+  border-color: #1976d2;
+}
+
+.ant-btn-primary:hover {
+  background: #1565c0;
+  border-color: #1565c0;
+}
+
+.ant-btn-danger {
+  background: #ff4d4f;
+  border-color: #ff4d4f;
+}
+
+.ant-btn-danger:hover {
+  background: #ff7875;
+  border-color: #ff7875;
+}
+
+.ant-alert {
+  border-radius: 8px;
+  border: none;
+}
+
+.ant-alert-info {
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+}
+
+.ant-alert-error {
+  background: #fff2f0;
+  border: 1px solid #ffccc7;
+}
+
+.ant-alert-message {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.ant-alert-description {
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Modal styling */
+.ant-modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ant-modal-header {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 20px 24px;
+}
+
+.ant-modal-title {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.ant-modal-body {
+  padding: 24px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.ant-modal-footer {
+  border-top: 1px solid #f0f0f0;
+  padding: 16px 24px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .account-settings-page {
+    padding: 16px;
+  }
+  
+  .account-settings-tabs .ant-tabs-nav {
+    padding: 0 16px;
+  }
+  
+  .account-settings-tabs .ant-tabs-tab {
+    padding: 12px 16px;
+  }
+  
+  .settings-card .ant-card-body {
+    padding: 16px;
+  }
+  
+  .setting-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .login-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .login-time {
+    text-align: left;
+  }
+}
+
+/* Animation for settings items */
+.setting-item {
+  transition: all 0.3s ease;
+}
+
+.setting-item:hover {
+  background: #fafafa;
+  border-radius: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* Loading state */
+.ant-btn-loading {
+  opacity: 0.7;
+}
+
+/* Success message styling */
+.ant-message-success {
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  border-radius: 8px;
+}
+
+/* Error message styling */
+.ant-message-error {
+  background: #fff2f0;
+  border: 1px solid #ffccc7;
+  border-radius: 8px;
+}
+
+/* Warning message styling */
+.ant-message-warning {
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 8px;
+}
+
+/* Info message styling */
+.ant-message-info {
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 8px;
+}
+
+/* Scrollbar styling for login history */
+.login-history::-webkit-scrollbar {
+  width: 6px;
+}
+
+.login-history::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.login-history::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.login-history::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+} 

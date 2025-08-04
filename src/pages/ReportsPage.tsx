@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import dayjs from 'dayjs';
 import {
   Card,
   Tabs,
@@ -193,6 +194,16 @@ const ReportsPage: React.FC = () => {
   const handlePayrollReportGenerate = async () => {
     try {
       const values = await payrollForm.validateFields();
+      
+      // Convert dayjs objects to string format for API
+      const reportParams = {
+        ...values,
+        date_range: values.date_range ? [
+          values.date_range[0]?.format('YYYY-MM-DD'),
+          values.date_range[1]?.format('YYYY-MM-DD')
+        ] : null,
+      };
+      
       setLoading(true);
       setTimeout(() => {
         setReportData({
@@ -209,6 +220,16 @@ const ReportsPage: React.FC = () => {
   const handleEmployeeReportGenerate = async () => {
     try {
       const values = await employeeForm.validateFields();
+      
+      // Convert dayjs objects to string format for API
+      const reportParams = {
+        ...values,
+        date_range: values.date_range ? [
+          values.date_range[0]?.format('YYYY-MM-DD'),
+          values.date_range[1]?.format('YYYY-MM-DD')
+        ] : null,
+      };
+      
       setLoading(true);
       setTimeout(() => {
         setReportData({
@@ -225,6 +246,16 @@ const ReportsPage: React.FC = () => {
   const handleTaxReportGenerate = async () => {
     try {
       const values = await taxForm.validateFields();
+      
+      // Convert dayjs objects to string format for API
+      const reportParams = {
+        ...values,
+        date_range: values.date_range ? [
+          values.date_range[0]?.format('YYYY-MM-DD'),
+          values.date_range[1]?.format('YYYY-MM-DD')
+        ] : null,
+      };
+      
       setLoading(true);
       setTimeout(() => {
         setReportData({

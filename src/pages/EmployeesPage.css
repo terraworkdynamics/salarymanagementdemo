@@ -8,8 +8,10 @@
 @media (max-width: 600px) {
   .employees-page-container {
     padding: 10px 0;
+    background: #ffffff !important;
   }
 }
+
 .employee-search-input,
 .employee-search-input input {
   background: transparent !important;
@@ -17,6 +19,7 @@
   border: none !important;
   outline: none !important;
 }
+
 /* Header Area */
 .employees-page-header {
   display: flex;
@@ -36,23 +39,31 @@
   }
 }
 
-/* Typography */
+/* Typography - Consistent Heading Styles */
 .ant-typography {
   margin-bottom: 0 !important;
   color: #122145;
   font-weight: 700;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* Mobile Typography Override */
+@media (max-width: 1023px) {
+  .ant-typography {
+    color: #000000 !important;
+  }
 }
 
 /* Search Box Enhancements */
 .employee-search-input {
   background: #fff !important;
-  
   padding-left: 12px !important;
   border-radius: 30px !important;
   font-size: 1rem !important;
   height: 50px !important;
   box-shadow: 0 3px 12px 0 rgba(80, 110, 245, 0.04);
 }
+
 .employee-search-input input {
   background: transparent !important;
   border: none !important;
@@ -63,13 +74,23 @@
   padding-left: 0 !important;
   height: 38px !important; /* match parent minus borders */
 }
+
 .employee-search-input input:-webkit-autofill {
   background: #fff !important;
   box-shadow: 0 0 0 1000px #fff inset !important;
   -webkit-text-fill-color: #111 !important;
 }
 
-
+/* Mobile Search Input Override */
+@media (max-width: 1023px) {
+  .employee-search-input input {
+    color: #000000 !important;
+  }
+  
+  .employee-search-input input:-webkit-autofill {
+    -webkit-text-fill-color: #000000 !important;
+  }
+}
 
 /* Add Employee Button */
 .employee-add-btn {
@@ -113,10 +134,20 @@
   .ant-table {
     border-radius: 7px !important;
     font-size: 14px;
+    background: #ffffff !important;
   }
   .ant-table-thead > tr > th, 
   .ant-table-tbody > tr > td {
     padding: 8px !important;
+    color: #000000 !important;
+  }
+}
+
+/* Mobile Table Override */
+@media (max-width: 1023px) {
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    color: #000000 !important;
   }
 }
 
@@ -142,25 +173,44 @@
   background: #e15d4c !important;
 }
 
+/* Mobile Button Override */
+@media (max-width: 1023px) {
+  .ant-btn-text {
+    color: #000000 !important;
+  }
+}
+
 /* Modal enhancements */
 .ant-modal-content {
   border-radius: 14px !important;
   box-shadow: 0 6px 32px rgba(59, 55, 188, 0.13);
   background: #fcfdff;
 }
+
 @media (max-width: 600px) {
   .employee-search-input,
   .employee-search-input input,
   .employee-search-input .ant-input {
     background: #fff !important;
-   
   }
 }
+
 @media (max-width: 600px) {
   .ant-modal {
     max-width: 98vw !important;
     padding: 0;
     margin: 0;
+  }
+}
+
+/* Mobile Modal Override */
+@media (max-width: 1023px) {
+  .ant-modal-content {
+    background: #ffffff !important;
+  }
+  
+  .ant-modal-title {
+    color: #000000 !important;
   }
 }
 
@@ -184,6 +234,13 @@
   }
 }
 
+/* Mobile Form Override */
+@media (max-width: 1023px) {
+  .ant-form-item-label label {
+    color: #000000 !important;
+  }
+}
+
 /* Ant Select + Datepicker */
 .ant-select, .ant-picker {
   width: 100% !important;
@@ -196,6 +253,15 @@
   .ant-select, .ant-input, .ant-picker {
     min-height: 36px;
     font-size: 14px;
+  }
+}
+
+/* Mobile Input Override */
+@media (max-width: 1023px) {
+  .ant-select-selector,
+  .ant-input,
+  .ant-picker {
+    color: #000000 !important;
   }
 }
 
@@ -225,9 +291,68 @@
 .ant-popover-inner-content, .ant-pop-over-inner {
   font-size: 1rem;
 }
+
 @media (max-width: 600px) {
   .ant-table-tbody > tr > td,
   .ant-table-thead > tr > th {
     color: #000 !important;
+  }
+}
+
+/* ================= MOBILE STYLING OVERRIDE ================= */
+@media (max-width: 1023px) {
+  /* Force white background for mobile */
+  .employees-page-container {
+    background: #ffffff !important;
+  }
+  
+  /* Ensure all text is black on mobile */
+  .ant-typography,
+  .ant-table-tbody > tr > td,
+  .ant-table-thead > tr > th,
+  .ant-form-item-label > label,
+  .ant-input,
+  .ant-select-selector,
+  .ant-picker,
+  .ant-btn,
+  .ant-modal-title,
+  .ant-modal-content {
+    color: #000000 !important;
+  }
+  
+  /* Force white backgrounds for components */
+  .ant-table,
+  .ant-modal-content,
+  .ant-card {
+    background: #ffffff !important;
+  }
+}
+
+/* ================= DARK MODE OVERRIDE FOR MOBILE ================= */
+@media (prefers-color-scheme: dark) and (max-width: 1023px) {
+  /* Override dark mode for mobile - force light theme */
+  .employees-page-container {
+    background: #ffffff !important;
+  }
+  
+  /* Force all text to be black in mobile dark mode */
+  .ant-typography,
+  .ant-table-tbody > tr > td,
+  .ant-table-thead > tr > th,
+  .ant-form-item-label > label,
+  .ant-input,
+  .ant-select-selector,
+  .ant-picker,
+  .ant-btn,
+  .ant-modal-title,
+  .ant-modal-content {
+    color: #000000 !important;
+  }
+  
+  /* Force white backgrounds */
+  .ant-table,
+  .ant-modal-content,
+  .ant-card {
+    background: #ffffff !important;
   }
 }

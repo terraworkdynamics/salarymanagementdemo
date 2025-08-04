@@ -119,6 +119,89 @@ pre {
   scrollbar-color: var(--neutral-300) var(--neutral-100);
 }
 
+/* ================= MOBILE STYLING - WHITE BACKGROUND & BLACK TEXT ================= */
+@media (max-width: 1023px) {
+  /* Force white background and black text for mobile */
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  /* Ensure all text elements are black on mobile */
+  .ant-typography,
+  .ant-table-tbody > tr > td,
+  .ant-table-thead > tr > th,
+  .ant-form-item-label > label,
+  .ant-input,
+  .ant-select-selector,
+  .ant-picker,
+  .ant-btn,
+  .ant-modal-title,
+  .ant-modal-content,
+  .ant-card-head-title,
+  .ant-card-body,
+  .ant-menu-item,
+  .ant-menu-submenu-title {
+    color: #000000 !important;
+  }
+  
+  /* Ensure headings are black and consistent on mobile */
+  .page-title,
+  .ant-typography h1,
+  .ant-typography h2,
+  .ant-typography h3,
+  .ant-typography h4,
+  .ant-typography h5,
+  .ant-typography h6 {
+    color: #000000 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-weight: 700 !important;
+  }
+  
+  /* Force white backgrounds for all components */
+  .ant-card,
+  .ant-modal-content,
+  .ant-menu,
+  .ant-dropdown-menu {
+    background: #ffffff !important;
+  }
+}
+
+/* ================= DARK MODE OVERRIDE FOR MOBILE ================= */
+@media (prefers-color-scheme: dark) and (max-width: 1023px) {
+  /* Override dark mode for mobile - force light theme */
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  /* Force all text to be black in mobile dark mode */
+  .ant-typography,
+  .ant-table-tbody > tr > td,
+  .ant-table-thead > tr > th,
+  .ant-form-item-label > label,
+  .ant-input,
+  .ant-select-selector,
+  .ant-picker,
+  .ant-btn,
+  .ant-modal-title,
+  .ant-modal-content,
+  .ant-card-head-title,
+  .ant-card-body,
+  .ant-menu-item,
+  .ant-menu-submenu-title {
+    color: #000000 !important;
+  }
+  
+  /* Force white backgrounds */
+  .ant-card,
+  .ant-modal-content,
+  .ant-menu,
+  .ant-dropdown-menu {
+    background: #ffffff !important;
+  }
+}
+
 /* Enhanced Ant Design Overrides */
 .ant-layout {
   background: var(--bg-secondary) !important;
