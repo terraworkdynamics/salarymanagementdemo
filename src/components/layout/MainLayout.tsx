@@ -15,7 +15,7 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import { useAuth } from '../../contexts/AuthContext';
-import { Chatbot } from '../ui';
+import { Chatbot, SearchBar } from '../ui';
 import '../../styles/MainLayout.css';
 const { Header, Sider, Content } = Layout;
 
@@ -268,13 +268,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     </button>
   )}
 
-            {/* Search Bar */}
+            {/* Search Bar in Header */}
             <div className="header-search-bar">
-              <SearchOutlined className="header-search-icon" />
-              <input
-                type="text"
+              <SearchBar 
                 placeholder="Search employees, payrolls..."
-                className="header-search-input"
+                className="header-search-component"
               />
             </div>
           </div>

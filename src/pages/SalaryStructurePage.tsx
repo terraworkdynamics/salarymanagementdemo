@@ -272,7 +272,9 @@ const SalaryStructurePage: React.FC = () => {
       ),
     },
   ];
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="salary-structure-page-main">
       <Title level={2}>Salary Structure Management</Title>

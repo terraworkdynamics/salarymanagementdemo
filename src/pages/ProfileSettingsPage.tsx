@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import {
   Card,
@@ -130,7 +130,9 @@ const ProfileSettingsPage: React.FC = () => {
     setEditing(false);
     form.resetFields();
   };
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="profile-settings-page">
       <div className="profile-settings-header">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import {
   Card,
@@ -268,7 +268,9 @@ const ReportsPage: React.FC = () => {
       console.error('Error generating report:', error);
     }
   };
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="reports-root">
       <TitleComponent level={2} className="reports-title">

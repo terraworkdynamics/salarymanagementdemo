@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Alert, Typography, Button, Card, Spin, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone, ArrowLeftOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -20,9 +20,10 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Get the redirect path from location state or default to dashboard
   const from = (location.state as LocationState)?.from?.pathname || '/dashboard';
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const onFinish = async (values: { email: string; password: string }) => {
     setLoading(true);
     setError(null);
@@ -43,67 +44,69 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="login-page-bg">
-      <div style={{ width: '100%', maxWidth: '400px' }}>
-        <Card className="login-card-glass">
-          <div className="login-card-inner">
-            {/* Back Button */}
-            <div style={{ marginBottom: '16px' }}>
-              <Button
-                type="text"
-                icon={<ArrowLeftOutlined />}
-                onClick={() => navigate('/')}
-                className="login-back-button"
-              >
-                Back to Home
-              </Button>
-            </div>
-            
+    <div className="login-container">
+      <div className="login-wrapper">
+        <Card className="login-card">
+          {/* Back Button */}
+          <Button
+            type="text"
+            icon={<ArrowLeftOutlined />}
+            onClick={() => navigate('/')}
+            className="back-button"
+          >
+            Back
+          </Button>
+
+          <div className="login-content">
             {/* Header */}
-            <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-              <div className="login-lock-hero">
-                <LockOutlined />
+            <div className="login-header">
+              <div className="logo-container">
+                <LockOutlined className="logo-icon" />
               </div>
               <Title level={2} className="login-title">
                 Welcome Back
               </Title>
-              <Paragraph className="login-sub">
-                Sign in to your Salary Management account
+              <Paragraph className="login-subtitle">
+                Please sign in to your account
               </Paragraph>
             </div>
 
             {/* Error Alert */}
             {error && (
-              <div className="login-error">
-                <Alert
-                  message="Login Error"
-                  description={error}
-                  type="error"
-                  showIcon
-                  style={{ borderRadius: '8px' }}
-                />
-              </div>
+              <Alert
+                message={error}
+                type="error"
+                showIcon
+                className="error-alert"
+                closable
+                onClose={() => setError(null)}
+              />
             )}
 
             {/* Login Form */}
             <Form
-              className="login-form"
               name="login"
               onFinish={onFinish}
               layout="vertical"
+              className="login-form"
               size="large"
+              initialValues={{
+                email: 'admin@example.com',
+                password: 'password123'
+              }}
             >
               <Form.Item
                 name="email"
-                label="Email Address"
+                label="Email"
                 rules={[
-                  { required: true, message: 'Please enter your email address' },
-                  { type: 'email', message: 'Please enter a valid email address' }
+                  { required: true, message: 'Please enter your email' },
+                  { type: 'email', message: 'Please enter a valid email' }
                 ]}
               >
                 <Input
-                  prefix={<UserOutlined style={{ color: '#9ca3af' }} />}
+                  prefix={<UserOutlined />}
                   placeholder="Enter your email"
+                  className="form-input"
                 />
               </Form.Item>
 
@@ -113,50 +116,47 @@ const LoginPage: React.FC = () => {
                 rules={[{ required: true, message: 'Please enter your password' }]}
               >
                 <Input.Password
-                  prefix={<LockOutlined style={{ color: '#9ca3af' }} />}
+                  prefix={<LockOutlined />}
                   placeholder="Enter your password"
+                  className="form-input"
                   iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                 />
               </Form.Item>
 
-              <div className="login-extra-row">
-                <Checkbox className="login-remember">Remember me</Checkbox>
-                <a href="#" className="login-forgot">
+              <div className="form-options">
+                <Checkbox className="remember-checkbox">
+                  Remember me
+                </Checkbox>
+                <a href="#" className="forgot-link">
                   Forgot password?
                 </a>
               </div>
 
-              <Form.Item style={{ marginBottom: 0 }}>
+              <Form.Item>
                 <Button
                   type="primary"
                   htmlType="submit"
                   loading={loading}
-                  className="login-submit-btn"
-                  disabled={loading}
+                  className="login-button"
+                  block
                 >
-                  {loading ? <Spin size="small" /> : 'Sign In'}
+                  Sign In
                 </Button>
               </Form.Item>
             </Form>
 
-            {/* Demo Credentials */}
-            <div className="login-demo-credentials">
-              <p>
-                Demo Credentials:
-              </p>
-              <div style={{ marginBottom: '4px' }}>
-                <strong>Email:</strong> admin@example.com
-              </div>
-              <div>
-                <strong>Password:</strong> password123
-              </div>
+            {/* Optional: Demo Notice */}
+            <div className="demo-notice">
+              <Paragraph className="demo-notice-text">
+                Demo credentials are pre-filled for testing
+              </Paragraph>
             </div>
 
             {/* Footer */}
             <div className="login-footer">
-              <Paragraph className="login-footer-text">
+              <Paragraph className="footer-text">
                 Don't have an account?{' '}
-                <a href="#" className="login-footer-link">
+                <a href="#" className="signup-link">
                   Contact Administrator
                 </a>
               </Paragraph>

@@ -52,7 +52,9 @@ const DashboardPage: React.FC = () => {
   const [salaryData, setSalaryData] = useState<any>({});
   const [recentPayrolls, setRecentPayrolls] = useState<PayrollPeriod[]>([]);
   const [recentEmployees, setRecentEmployees] = useState<Employee[]>([]);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   useEffect(() => {
     const fetchDashboardData = async () => {
       setLoading(true);

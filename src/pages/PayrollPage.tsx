@@ -56,7 +56,9 @@ const PayrollPage: React.FC = () => {
   const [payrollModalVisible, setPayrollModalVisible] = useState<boolean>(false);
   const [selectedPeriod, setSelectedPeriod] = useState<PayrollPeriod | null>(null);
   const [payrollForm] = Form.useForm();
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   useEffect(() => {
     loadPayrollPeriods();
   }, []);

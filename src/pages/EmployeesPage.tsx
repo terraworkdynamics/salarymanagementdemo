@@ -40,14 +40,16 @@ const EmployeesPage: React.FC = () => {
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
   const [form] = Form.useForm();
   const [searchText, setSearchText] = useState<string>('');
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   useEffect(() => {
     loadEmployees();
   }, []);
 
   const loadEmployees = async () => {
     setLoading(true);
-    try {
+    try {   
       const { data, error } = await fetchEmployees();
       if (error) {
         throw error;

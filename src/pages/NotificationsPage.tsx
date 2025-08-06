@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card,
-  List,
   Avatar,
   Typography,
   Badge,
@@ -9,11 +8,7 @@ import {
   Tabs,
   Space,
   Tag,
-  Divider,
   Empty,
-  Switch,
-  Row,
-  Col,
   message,
   Popconfirm,
 } from 'antd';
@@ -30,10 +25,12 @@ import {
   ExclamationCircleOutlined,
   InfoCircleOutlined,
   CheckCircleOutlined,
+  DownloadOutlined,
+  ReloadOutlined,
 } from '@ant-design/icons';
 import './NotificationsPage.css';
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Text } = Typography;
 const { TabPane } = Tabs;
 
 interface Notification {
@@ -47,6 +44,7 @@ interface Notification {
   priority: 'low' | 'medium' | 'high';
   action?: {
     label: string;
+    icon?: React.ReactNode;
     onClick: () => void;
   };
 }
@@ -64,6 +62,7 @@ const NotificationsPage: React.FC = () => {
       priority: 'high',
       action: {
         label: 'View Details',
+        icon: <EyeOutlined />,
         onClick: () => message.info('Viewing payroll details...'),
       },
     },
@@ -78,6 +77,7 @@ const NotificationsPage: React.FC = () => {
       priority: 'medium',
       action: {
         label: 'View Profile',
+        icon: <EyeOutlined />,
         onClick: () => message.info('Viewing employee profile...'),
       },
     },
@@ -102,6 +102,7 @@ const NotificationsPage: React.FC = () => {
       priority: 'high',
       action: {
         label: 'Retry',
+        icon: <ReloadOutlined />,
         onClick: () => message.success('Payroll processing retried successfully'),
       },
     },
@@ -126,6 +127,7 @@ const NotificationsPage: React.FC = () => {
       priority: 'high',
       action: {
         label: 'Start Review',
+        icon: <EyeOutlined />,
         onClick: () => message.info('Opening performance review...'),
       },
     },
@@ -150,19 +152,11 @@ const NotificationsPage: React.FC = () => {
       priority: 'low',
       action: {
         label: 'Download',
+        icon: <DownloadOutlined />,
         onClick: () => message.success('Report downloaded successfully'),
       },
     },
   ]);
-
-  const [settings, setSettings] = useState({
-    emailNotifications: true,
-    pushNotifications: false,
-    payrollNotifications: true,
-    employeeNotifications: true,
-    systemNotifications: false,
-    generalNotifications: true,
-  });
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
@@ -249,10 +243,34 @@ const NotificationsPage: React.FC = () => {
   const generalNotifications = notifications.filter(n => n.category === 'general');
 
   const renderNotificationItem = (notification: Notification) => (
-    <List.Item
-      className={`notification-item ${notification.read ? 'read' : 'unread'}`}
-      actions={[
-        !notification.read && (
+    <div key={notification.id} className={`notification-item ${notification.read ? 'read' : 'unread'}`}>
+      <div className="notification-content">
+        <Badge dot={!notification.read}>
+          <Avatar
+            icon={getNotificationIcon(notification.type)}
+            className={`notification-avatar ${notification.type}`}
+          />
+        </Badge>
+        <div className="notification-text-content">
+          <p className="notification-paragraph">
+            <span className="notification-title">{notification.title}</span>
+            <span className="notification-tags">
+              <Tag color={getPriorityColor(notification.priority)}>
+                {notification.priority.toUpperCase()}
+              </Tag>
+              <Tag icon={getCategoryIcon(notification.category)}>
+                {notification.category}
+              </Tag>
+            </span>
+            <span className="notification-message">{notification.message}</span>
+            <span className="notification-timestamp">
+              <ClockCircleOutlined /> {formatTimestamp(notification.timestamp)}
+            </span>
+          </p>
+        </div>
+      </div>
+      <div className="notification-actions">
+        {!notification.read && (
           <Button
             type="text"
             size="small"
@@ -261,17 +279,17 @@ const NotificationsPage: React.FC = () => {
           >
             Mark as Read
           </Button>
-        ),
-        notification.action && (
+        )}
+        {notification.action && (
           <Button
             type="primary"
             size="small"
-            icon={<EyeOutlined />}
+            icon={notification.action.icon}
             onClick={notification.action.onClick}
           >
             {notification.action.label}
           </Button>
-        ),
+        )}
         <Popconfirm
           title="Delete this notification?"
           onConfirm={() => deleteNotification(notification.id)}
@@ -287,42 +305,12 @@ const NotificationsPage: React.FC = () => {
             Delete
           </Button>
         </Popconfirm>
-      ].filter(Boolean)}
-    >
-      <List.Item.Meta
-        avatar={
-          <Badge dot={!notification.read}>
-            <Avatar
-              icon={getNotificationIcon(notification.type)}
-              className={`notification-avatar ${notification.type}`}
-            />
-          </Badge>
-        }
-        title={
-          <Space>
-            <Text strong={!notification.read}>{notification.title}</Text>
-            <Tag color={getPriorityColor(notification.priority)}>
-              {notification.priority.toUpperCase()}
-            </Tag>
-            <Tag icon={getCategoryIcon(notification.category)}>
-              {notification.category}
-            </Tag>
-          </Space>
-        }
-        description={
-          <div>
-            <Paragraph className="notification-message">
-              {notification.message}
-            </Paragraph>
-            <Text type="secondary" className="notification-timestamp">
-              <ClockCircleOutlined /> {formatTimestamp(notification.timestamp)}
-            </Text>
-          </div>
-        }
-      />
-    </List.Item>
+      </div>
+    </div>
   );
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="notifications-page">
       <div className="notifications-header">
@@ -348,182 +336,112 @@ const NotificationsPage: React.FC = () => {
         </Space>
       </div>
 
-      <Row gutter={[24, 24]}>
-        <Col xs={24} lg={18}>
-          <Card className="notifications-card">
-            <Tabs defaultActiveKey="all" className="notifications-tabs">
-              <TabPane
-                tab={
-                  <span>
-                    All Notifications
-                    <Badge count={notifications.length} style={{ marginLeft: 8 }} />
-                  </span>
-                }
-                key="all"
-              >
-                <List
-                  dataSource={notifications}
-                  renderItem={renderNotificationItem}
-                  locale={{
-                    emptyText: (
-                      <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        description="No notifications"
-                      />
-                    ),
-                  }}
+      <Card className="notifications-card">
+        <Tabs defaultActiveKey="all" className="notifications-tabs">
+          <TabPane
+            tab={
+              <span>
+                All Notifications
+                <Badge count={notifications.length} style={{ marginLeft: 8 }} />
+              </span>
+            }
+            key="all"
+          >
+            <div>
+              {notifications.length > 0 ? (
+                notifications.map(renderNotificationItem)
+              ) : (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="No notifications"
                 />
-              </TabPane>
-              <TabPane
-                tab={
-                  <span>
-                    Payroll
-                    <Badge count={payrollNotifications.filter(n => !n.read).length} style={{ marginLeft: 8 }} />
-                  </span>
-                }
-                key="payroll"
-              >
-                <List
-                  dataSource={payrollNotifications}
-                  renderItem={renderNotificationItem}
-                  locale={{
-                    emptyText: (
-                      <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        description="No payroll notifications"
-                      />
-                    ),
-                  }}
-                />
-              </TabPane>
-              <TabPane
-                tab={
-                  <span>
-                    Employees
-                    <Badge count={employeeNotifications.filter(n => !n.read).length} style={{ marginLeft: 8 }} />
-                  </span>
-                }
-                key="employees"
-              >
-                <List
-                  dataSource={employeeNotifications}
-                  renderItem={renderNotificationItem}
-                  locale={{
-                    emptyText: (
-                      <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        description="No employee notifications"
-                      />
-                    ),
-                  }}
-                />
-              </TabPane>
-              <TabPane
-                tab={
-                  <span>
-                    System
-                    <Badge count={systemNotifications.filter(n => !n.read).length} style={{ marginLeft: 8 }} />
-                  </span>
-                }
-                key="system"
-              >
-                <List
-                  dataSource={systemNotifications}
-                  renderItem={renderNotificationItem}
-                  locale={{
-                    emptyText: (
-                      <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        description="No system notifications"
-                      />
-                    ),
-                  }}
-                />
-              </TabPane>
-              <TabPane
-                tab={
-                  <span>
-                    General
-                    <Badge count={generalNotifications.filter(n => !n.read).length} style={{ marginLeft: 8 }} />
-                  </span>
-                }
-                key="general"
-              >
-                <List
-                  dataSource={generalNotifications}
-                  renderItem={renderNotificationItem}
-                  locale={{
-                    emptyText: (
-                      <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        description="No general notifications"
-                      />
-                    ),
-                  }}
-                />
-              </TabPane>
-            </Tabs>
-          </Card>
-        </Col>
-
-        <Col xs={24} lg={6}>
-          <Card title="Notification Settings" className="settings-card">
-            <div className="settings-section">
-              <Title level={5}>General Settings</Title>
-              <div className="setting-item">
-                <Text>Email Notifications</Text>
-                <Switch
-                  checked={settings.emailNotifications}
-                  onChange={(checked) => setSettings(prev => ({ ...prev, emailNotifications: checked }))}
-                />
-              </div>
-              <div className="setting-item">
-                <Text>Push Notifications</Text>
-                <Switch
-                  checked={settings.pushNotifications}
-                  onChange={(checked) => setSettings(prev => ({ ...prev, pushNotifications: checked }))}
-                />
-              </div>
+              )}
             </div>
-
-            <Divider />
-
-            <div className="settings-section">
-              <Title level={5}>Category Settings</Title>
-              <div className="setting-item">
-                <Text>Payroll Notifications</Text>
-                <Switch
-                  checked={settings.payrollNotifications}
-                  onChange={(checked) => setSettings(prev => ({ ...prev, payrollNotifications: checked }))}
+          </TabPane>
+          <TabPane
+            tab={
+              <span>
+                Payroll
+                <Badge count={payrollNotifications.filter(n => !n.read).length} style={{ marginLeft: 8 }} />
+              </span>
+            }
+            key="payroll"
+          >
+            <div>
+              {payrollNotifications.length > 0 ? (
+                payrollNotifications.map(renderNotificationItem)
+              ) : (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="No payroll notifications"
                 />
-              </div>
-              <div className="setting-item">
-                <Text>Employee Notifications</Text>
-                <Switch
-                  checked={settings.employeeNotifications}
-                  onChange={(checked) => setSettings(prev => ({ ...prev, employeeNotifications: checked }))}
-                />
-              </div>
-              <div className="setting-item">
-                <Text>System Notifications</Text>
-                <Switch
-                  checked={settings.systemNotifications}
-                  onChange={(checked) => setSettings(prev => ({ ...prev, systemNotifications: checked }))}
-                />
-              </div>
-              <div className="setting-item">
-                <Text>General Notifications</Text>
-                <Switch
-                  checked={settings.generalNotifications}
-                  onChange={(checked) => setSettings(prev => ({ ...prev, generalNotifications: checked }))}
-                />
-              </div>
+              )}
             </div>
-          </Card>
-        </Col>
-      </Row>
+          </TabPane>
+          <TabPane
+            tab={
+              <span>
+                Employees
+                <Badge count={employeeNotifications.filter(n => !n.read).length} style={{ marginLeft: 8 }} />
+              </span>
+            }
+            key="employees"
+          >
+            <div>
+              {employeeNotifications.length > 0 ? (
+                employeeNotifications.map(renderNotificationItem)
+              ) : (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="No employee notifications"
+                />
+              )}
+            </div>
+          </TabPane>
+          <TabPane
+            tab={
+              <span>
+                System
+                <Badge count={systemNotifications.filter(n => !n.read).length} style={{ marginLeft: 8 }} />
+              </span>
+            }
+            key="system"
+          >
+            <div>
+              {systemNotifications.length > 0 ? (
+                systemNotifications.map(renderNotificationItem)
+              ) : (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="No system notifications"
+                />
+              )}
+            </div>
+          </TabPane>
+          <TabPane
+            tab={
+              <span>
+                General
+                <Badge count={generalNotifications.filter(n => !n.read).length} style={{ marginLeft: 8 }} />
+              </span>
+            }
+            key="general"
+          >
+            <div>
+              {generalNotifications.length > 0 ? (
+                generalNotifications.map(renderNotificationItem)
+              ) : (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="No general notifications"
+                />
+              )}
+            </div>
+          </TabPane>
+        </Tabs>
+      </Card>
     </div>
   );
 };
 
-export default NotificationsPage; 
+export default NotificationsPage;

@@ -14,6 +14,7 @@ import ChatbotTestPage from './pages/ChatbotTestPage';
 import ProfileSettingsPage from './pages/ProfileSettingsPage';
 import NotificationsPage from './pages/NotificationsPage';
 import AccountSettingsPage from './pages/AccountSettingsPage';
+import SearchResultsPage from './pages/SearchResultsPage';
 
 // Components
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -147,6 +148,16 @@ function App() {
                   <ProtectedRoute>
                     <MainLayout>
                       <AccountSettingsPage />
+                    </MainLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/search"
+                element={
+                  <ProtectedRoute>
+                    <MainLayout>
+                      <SearchResultsPage />
                     </MainLayout>
                   </ProtectedRoute>
                 }
